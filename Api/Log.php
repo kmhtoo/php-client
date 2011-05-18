@@ -28,7 +28,7 @@ class Jirafe_Api_Log extends Jirafe_Api
         if(empty($adminToken)) {
             throw new Exception('Admin token can\'t be empty');
         }
-        return $this->sendData(self::JIRAFE_API_LOGS, $data, $adminToken, Zend_Http_Client::POST);
+        return $this->sendData(self::JIRAFE_API_LOGS, $data, $adminToken, self::HTTP_METHOD_POST);
     }
 
        

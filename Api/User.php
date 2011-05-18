@@ -37,7 +37,7 @@ class Jirafe_Api_User extends Jirafe_Api
         $data['first_name'] = $firstName;
         $data['last_name'] = $lastName;
         $data['mobile_phone'] = $mobilePhone;
-        return $this->sendData(self::JIRAFE_API_USERS, $data, Zend_Http_Client::POST);
+        return $this->sendData(self::JIRAFE_API_USERS, $data, self::HTTP_METHOD_POST);
     }
 
     /**
@@ -47,7 +47,7 @@ class Jirafe_Api_User extends Jirafe_Api
      */
     public function getInfo ($username)
     {
-        return $this->sendData(self::JIRAFE_API_USERS.'/'.$username, false, Zend_Http_Client::GET);
+        return $this->sendData(self::JIRAFE_API_USERS.'/'.$username, false, self::HTTP_METHOD_GET);
     }
 
     /**
@@ -60,7 +60,7 @@ class Jirafe_Api_User extends Jirafe_Api
     {
         $data = array();
         $data['email'] = $email;
-        return $this->sendData(self::JIRAFE_API_SITES.'/'.$username, $data, Zend_Http_Client::PUT);
+        return $this->sendData(self::JIRAFE_API_SITES.'/'.$username, $data, self::HTTP_METHOD_PUT);
     }
 
 }

@@ -41,7 +41,7 @@ class Jirafe_Api_Resource extends Jirafe_Api
         $data['users'] = $userArray;
         $data['sites'] = $siteArray;
 
-        return $this->sendData(self::JIRAFE_API_APPLICATIONS.'/'.$appId .self::JIRAFE_API_RESOURCES, $data, $adminToken, Zend_Http_Client::POST);
+        return $this->sendData(self::JIRAFE_API_APPLICATIONS.'/'.$appId .self::JIRAFE_API_RESOURCES, $data, $adminToken, self::HTTP_METHOD_POST);
     }
 
 }

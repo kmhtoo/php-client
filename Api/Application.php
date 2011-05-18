@@ -30,7 +30,7 @@ class Jirafe_Api_Application extends Jirafe_Api
         $data = array();
         $data['name'] = $name;
         $data['url'] = $url;
-        return $this->sendData(self::JIRAFE_API_APPLICATIONS, $data, false, Zend_Http_Client::POST);
+        return $this->sendData(self::JIRAFE_API_APPLICATIONS, $data, false, self::HTTP_METHOD_POST);
     }
 
     /**
@@ -44,7 +44,7 @@ class Jirafe_Api_Application extends Jirafe_Api
         if(empty($appId) || empty($adminToken)) {
             throw new Exception('Application id and admin token can\'t be empty');
         }
-        return $this->sendData(self::JIRAFE_API_APPLICATIONS.'/'.$appId, false, $adminToken, Zend_Http_Client::GET);
+        return $this->sendData(self::JIRAFE_API_APPLICATIONS.'/'.$appId, false, $adminToken, self::HTTP_METHOD_GET);
     }
 
     /**
@@ -58,7 +58,7 @@ class Jirafe_Api_Application extends Jirafe_Api
         if(empty($appId) || empty($adminToken)) {
             throw new Exception('Application id and admin token can\'t be empty');
         }
-        return $this->sendData(self::JIRAFE_API_APPLICATIONS.'/'.$appId.self::JIRAFE_API_SITES, false, $adminToken, Zend_Http_Client::GET);
+        return $this->sendData(self::JIRAFE_API_APPLICATIONS.'/'.$appId.self::JIRAFE_API_SITES, false, $adminToken, self::HTTP_METHOD_GET);
     }
 
     /**
@@ -74,7 +74,7 @@ class Jirafe_Api_Application extends Jirafe_Api
         }
         $data = array();
         $data['url'] = $url;
-        return $this->sendData(self::JIRAFE_API_APPLICATIONS.'/'.$appId, $data, $adminToken, Zend_Http_Client::PUT);
+        return $this->sendData(self::JIRAFE_API_APPLICATIONS.'/'.$appId, $data, $adminToken, self::HTTP_METHOD_PUT);
     }
 
     /**
@@ -88,7 +88,7 @@ class Jirafe_Api_Application extends Jirafe_Api
         if(empty($appId) || empty($adminToken)) {
             throw new Exception('Application id and admin token can\'t be empty');
         }
-        return $this->sendData(self::JIRAFE_API_APPLICATIONS.'/'.$appId, false, $adminToken, Zend_Http_Client::DELETE);
+        return $this->sendData(self::JIRAFE_API_APPLICATIONS.'/'.$appId, false, $adminToken, self::HTTP_METHOD_DELETE);
     }
        
 }

@@ -27,7 +27,7 @@ class Jirafe_Api_Site extends Jirafe_Api
         if(empty($siteId) || empty($adminToken)) {
             throw new Exception('Site id and admin token can\'t be empty');
         }
-        return $this->sendData(self::JIRAFE_API_SITES.'/'.$siteId, false, $adminToken, Zend_Http_Client::GET);
+        return $this->sendData(self::JIRAFE_API_SITES.'/'.$siteId, false, $adminToken, self::HTTP_METHOD_GET);
     }
 
     /**
@@ -41,7 +41,7 @@ class Jirafe_Api_Site extends Jirafe_Api
         if(empty($siteId) || empty($adminToken)) {
             throw new Exception('Site id and admin token can\'t be empty');
         }
-        return $this->sendData(self::JIRAFE_API_SITES.'/'.$siteId.self::JIRAFE_API_USERS, false, $adminToken, Zend_Http_Client::GET);
+        return $this->sendData(self::JIRAFE_API_SITES.'/'.$siteId.self::JIRAFE_API_USERS, false, $adminToken, self::HTTP_METHOD_GET);
     }
 
     /**
@@ -58,7 +58,7 @@ class Jirafe_Api_Site extends Jirafe_Api
         }
         $data = array();
         $data['timezone'] = $timezone;
-        return $this->sendData(self::JIRAFE_API_SITES.'/'.$siteId, $data, $adminToken, Zend_Http_Client::PUT);
+        return $this->sendData(self::JIRAFE_API_SITES.'/'.$siteId, $data, $adminToken, self::HTTP_METHOD_PUT);
     }
 
     /**
@@ -72,6 +72,6 @@ class Jirafe_Api_Site extends Jirafe_Api
         if(empty($siteId) || empty($adminToken)) {
             throw new Exception('Site id and admin token can\'t be empty');
         }
-        return $this->sendData(self::JIRAFE_API_SITES.'/'.$siteId, false, $adminToken, Zend_Http_Client::DELETE);
+        return $this->sendData(self::JIRAFE_API_SITES.'/'.$siteId, false, $adminToken, self::HTTP_METHOD_DELETE);
     }
 }

@@ -41,6 +41,11 @@ class Jirafe_Api
     const JIRAFE_API_SITES = '/sites';
     const JIRAFE_API_USERS = '/users';
     const JIRAFE_DOC_URL = 'http://jirafe.com/doc';
+    
+    const HTTP_METHOD_POST      = 'POST';
+    const HTTP_METHOD_GET       = 'GET';
+    const HTTP_METHOD_PUT       = 'PUT';
+    const HTTP_METHOD_DELETE    = 'DELETE';    
 
     private $_application = null;
     private $_log = null;
@@ -145,7 +150,7 @@ class Jirafe_Api
     }
 
     public function sendData ($entryPoint, $data, $adminToken = false,
-            $method = Zend_Http_Client::POST, $httpAuth = array())
+            $method = self::HTTP_METHOD_POST, $httpAuth = array())
     {
 
         if(!in_array('ssl', stream_get_transports())) {
@@ -170,7 +175,7 @@ class Jirafe_Api
         try {
             //connect and send data to Jirafe
             //loop over data items and add them as post/put parameters if requested
-            if (is_array($data) && ($method == Zend_Http_Client::POST || $method == Zend_Http_Client::PUT)) {
+            if (is_array($data) && ($method == self::HTTP_METHOD_POST || $method == self::HTTP_METHOD_PUT)) {
                 foreach ($data as $parameter => $value) {
                     $conn->setParameterPost($parameter, $value);
                 }
