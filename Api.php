@@ -205,11 +205,11 @@ class Jirafe_Api
         //check for returned errors
         $result = json_decode($reponseBody,true);
         if(isset($result['errors']) && !empty($result['errors'])) {
-            $errors = array();
-            foreach ($result['errors'] as $error) {
-                $errors[] = $error;
+            if(is_array($result['errors'])) {
+                throw new Exception(implode(',',$result['errors']));                
+            } else {
+                throw new Exception($result['errors']);         
             }
-            throw new Exception(implode(',',$errors));
         }
         return $result;
     }
