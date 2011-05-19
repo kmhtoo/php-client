@@ -56,6 +56,7 @@ class Jirafe_Api
     public function getApplication()
     {
         if($this->_application == null) {
+            require_once 'Api/Application.php';
             $this->_application = new Jirafe_Api_Application;
         }
         return $this->_application;
@@ -64,6 +65,7 @@ class Jirafe_Api
     public function getLog()
     {
         if($this->_log == null) {
+            require_once 'Api/Log.php';
             $this->_log = new Jirafe_Api_Log;
         }
         return $this->_log;
@@ -72,6 +74,7 @@ class Jirafe_Api
     public function getResource()
     {
         if($this->_resource == null) {
+            require_once 'Api/Resource.php';
             $this->_resource = new Jirafe_Api_Resource;
         }
         return $this->_resource;
@@ -80,6 +83,7 @@ class Jirafe_Api
     public function getSite()
     {
         if($this->_site == null) {
+            require_once 'Api/Site.php';
             $this->_site = new Jirafe_Api_Site;
         }
         return $this->_site;
@@ -88,6 +92,7 @@ class Jirafe_Api
     public function getUser()
     {
         if($this->_user == null) {
+            require_once 'Api/User.php';
             $this->_user = new Jirafe_Api_User;
         }
         return $this->_user;
