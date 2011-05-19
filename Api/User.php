@@ -12,11 +12,18 @@
  * @copyright   Copyright (c) 2010 Fooman Limited (http://www.fooman.co.nz)
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
+require_once dirname(dirname(__FILE__)).'/Api.php';
 
-class Jirafe_Api_User extends Jirafe_Api
+class Jirafe_Api_User
 {
 
-
+    private $_api = null;
+    
+    public function __construct($api)
+    {
+        $this->_api = $api;
+    }
+    
     /**
      * Create user account (does not require authentication)
      * @param $username - Desired username
@@ -37,7 +44,7 @@ class Jirafe_Api_User extends Jirafe_Api
         $data['first_name'] = $firstName;
         $data['last_name'] = $lastName;
         $data['mobile_phone'] = $mobilePhone;
-        return $this->sendData(self::JIRAFE_API_USERS, $data, self::HTTP_METHOD_POST);
+        return $this->_api->sendData(Jirafe_Api::JIRAFE_API_USERS, $data, Jirafe_Api::HTTP_METHOD_POST);
     }
 
     /**
@@ -47,7 +54,7 @@ class Jirafe_Api_User extends Jirafe_Api
      */
     public function getInfo ($username)
     {
-        return $this->sendData(self::JIRAFE_API_USERS.'/'.$username, false, self::HTTP_METHOD_GET);
+        return $this->_api->sendData(Jirafe_Api::JIRAFE_API_USERS.'/'.$username, false, Jirafe_Api::HTTP_METHOD_GET);
     }
 
     /**
@@ -60,7 +67,7 @@ class Jirafe_Api_User extends Jirafe_Api
     {
         $data = array();
         $data['email'] = $email;
-        return $this->sendData(self::JIRAFE_API_SITES.'/'.$username, $data, self::HTTP_METHOD_PUT);
+        return $this->_api->sendData(Jirafe_Api::JIRAFE_API_SITES.'/'.$username, $data, Jirafe_Api::HTTP_METHOD_PUT);
     }
 
 }

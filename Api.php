@@ -47,53 +47,70 @@ class Jirafe_Api
     const HTTP_METHOD_PUT       = 'PUT';
     const HTTP_METHOD_DELETE    = 'DELETE';    
 
+    private $_httpClient = null;    
+    
     private $_application = null;
     private $_log = null;
     private $_resource = null;
     private $_site = null;
     private $_user = null;
     
+    function __construct ($httpClient)
+    {
+        $this->_httpClient = $httpClient;
+    }
+
+    public function setHttpClient ($httpClient)
+    {
+        $this->_httpClient = $httpClient;
+    }
+
+    public function getHttpClient ()
+    {
+        return $this->_httpClient;
+    }
+
     public function getApplication()
     {
-        if($this->_application == null) {
+        if($this->_application === null) {
             require_once 'Api/Application.php';
-            $this->_application = new Jirafe_Api_Application;
+            $this->_application = new Jirafe_Api_Application($this);
         }
         return $this->_application;
     }
     
     public function getLog()
     {
-        if($this->_log == null) {
+        if($this->_log === null) {
             require_once 'Api/Log.php';
-            $this->_log = new Jirafe_Api_Log;
+            $this->_log = new Jirafe_Api_Log($this);
         }
         return $this->_log;
     }
     
     public function getResource()
     {
-        if($this->_resource == null) {
+        if($this->_resource === null) {
             require_once 'Api/Resource.php';
-            $this->_resource = new Jirafe_Api_Resource;
+            $this->_resource = new Jirafe_Api_Resource($this);
         }
         return $this->_resource;
     }
     
     public function getSite()
     {
-        if($this->_site == null) {
+        if($this->_site === null) {
             require_once 'Api/Site.php';
-            $this->_site = new Jirafe_Api_Site;
+            $this->_site = new Jirafe_Api_Site($this);
         }
         return $this->_site;
     }
     
     public function getUser()
     {
-        if($this->_user == null) {
+        if($this->_user === null) {
             require_once 'Api/User.php';
-            $this->_user = new Jirafe_Api_User;
+            $this->_user = new Jirafe_Api_User($this);
         }
         return $this->_user;
     }    
@@ -162,19 +179,16 @@ class Jirafe_Api
             throw new Exception("The Jirafe plugin requires outgoing connectivity via ssl to communicate securely with our server to function. Please enable ssl support for php or get your webhosting company to do it for you.");
         }
         
-        //set up connection
-        $conn = new Zend_Http_Client($this->getApiUrl($entryPoint));
-        $conn->setConfig(array(
-            'timeout' => 30,
-            'keepalive' => true
-        ));
+        //set up connection      
+        $this->getHttpClient()->setUri($this->getApiUrl($entryPoint));
+
         if($adminToken) {
-            $conn->setParameterGet('token', $adminToken);
+            $this->getHttpClient()->setParameterGet('token', $adminToken);
         }
-        //$conn->setParameterGet('XDEBUG_SESSION_START', 'switzer');
+        //$this->getHttpClient()->setParameterGet('XDEBUG_SESSION_START', 'switzer');
 
         if(!empty($httpAuth)) {
-            $conn->setAuth($httpAuth['username'], $httpAuth['password']);
+            $this->getHttpClient()->setAuth($httpAuth['username'], $httpAuth['password']);
         }
 
         try {
@@ -182,11 +196,11 @@ class Jirafe_Api
             //loop over data items and add them as post/put parameters if requested
             if (is_array($data) && ($method == self::HTTP_METHOD_POST || $method == self::HTTP_METHOD_PUT)) {
                 foreach ($data as $parameter => $value) {
-                    $conn->setParameterPost($parameter, $value);
+                    $this->getHttpClient()->setParameterPost($parameter, $value);
                 }
             }
-            $conn->request($method);
-            $result = $this->_errorChecking($conn->getLastResponse());
+            $this->getHttpClient()->request($method);
+            $result = $this->_errorChecking($this->getHttpClient()->getLastResponse());
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
             return false;

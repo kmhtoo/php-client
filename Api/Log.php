@@ -12,10 +12,18 @@
  * @copyright   Copyright (c) 2010 Fooman Limited (http://www.fooman.co.nz)
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
+require_once dirname(dirname(__FILE__)).'/Api.php';
 
-class Jirafe_Api_Log extends Jirafe_Api
+class Jirafe_Api_Log 
 {
 
+    private $_api = null;
+    
+    public function __construct($api)
+    {
+        $this->_api = $api;
+    }    
+    
     /**
      * Update application information
      *
@@ -28,7 +36,7 @@ class Jirafe_Api_Log extends Jirafe_Api
         if(empty($adminToken)) {
             throw new Exception('Admin token can\'t be empty');
         }
-        return $this->sendData(self::JIRAFE_API_LOGS, $data, $adminToken, self::HTTP_METHOD_POST);
+        return $this->_api->sendData(Jirafe_Api::JIRAFE_API_LOGS, $data, $adminToken, Jirafe_Api::HTTP_METHOD_POST);
     }
 
        

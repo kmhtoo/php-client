@@ -12,10 +12,18 @@
  * @copyright   Copyright (c) 2010 Fooman Limited (http://www.fooman.co.nz)
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
+require_once dirname(dirname(__FILE__)).'/Api.php';
 
-class Jirafe_Api_Site extends Jirafe_Api
+class Jirafe_Api_Site
 {
    
+    private $_api = null;
+    
+    public function __construct($api)
+    {
+        $this->_api = $api;
+    }    
+    
     /**
      * Get site information for site ID
      *
@@ -27,7 +35,7 @@ class Jirafe_Api_Site extends Jirafe_Api
         if(empty($siteId) || empty($adminToken)) {
             throw new Exception('Site id and admin token can\'t be empty');
         }
-        return $this->sendData(self::JIRAFE_API_SITES.'/'.$siteId, false, $adminToken, self::HTTP_METHOD_GET);
+        return $this->_api->sendData(Jirafe_Api::JIRAFE_API_SITES.'/'.$siteId, false, $adminToken, Jirafe_Api::HTTP_METHOD_GET);
     }
 
     /**
@@ -41,7 +49,7 @@ class Jirafe_Api_Site extends Jirafe_Api
         if(empty($siteId) || empty($adminToken)) {
             throw new Exception('Site id and admin token can\'t be empty');
         }
-        return $this->sendData(self::JIRAFE_API_SITES.'/'.$siteId.self::JIRAFE_API_USERS, false, $adminToken, self::HTTP_METHOD_GET);
+        return $this->_api->sendData(Jirafe_Api::JIRAFE_API_SITES.'/'.$siteId.Jirafe_Api::JIRAFE_API_USERS, false, $adminToken, Jirafe_Api::HTTP_METHOD_GET);
     }
 
     /**
@@ -58,7 +66,7 @@ class Jirafe_Api_Site extends Jirafe_Api
         }
         $data = array();
         $data['timezone'] = $timezone;
-        return $this->sendData(self::JIRAFE_API_SITES.'/'.$siteId, $data, $adminToken, self::HTTP_METHOD_PUT);
+        return $this->_api->sendData(Jirafe_Api::JIRAFE_API_SITES.'/'.$siteId, $data, $adminToken, Jirafe_Api::HTTP_METHOD_PUT);
     }
 
     /**
@@ -72,6 +80,6 @@ class Jirafe_Api_Site extends Jirafe_Api
         if(empty($siteId) || empty($adminToken)) {
             throw new Exception('Site id and admin token can\'t be empty');
         }
-        return $this->sendData(self::JIRAFE_API_SITES.'/'.$siteId, false, $adminToken, self::HTTP_METHOD_DELETE);
+        return $this->_api->sendData(Jirafe_Api::JIRAFE_API_SITES.'/'.$siteId, false, $adminToken, Jirafe_Api::HTTP_METHOD_DELETE);
     }
 }

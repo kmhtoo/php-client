@@ -12,10 +12,18 @@
  * @copyright   Copyright (c) 2010 Fooman Limited (http://www.fooman.co.nz)
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
+require_once dirname(dirname(__FILE__)).'/Api.php';
 
-class Jirafe_Api_Resource extends Jirafe_Api
+class Jirafe_Api_Resource
 {
 
+    private $_api = null;
+    
+    public function __construct($api)
+    {
+        $this->_api = $api;
+    }    
+    
   /*
     * users - A collection (an array) of JSON data corresponding to the users we want to synchronize. Accepted JSON keys are:
           o token - Jirafe authentication token for the given user. If provided, the user informations will be updated. If not, the user will be created.
@@ -41,7 +49,7 @@ class Jirafe_Api_Resource extends Jirafe_Api
         $data['users'] = $userArray;
         $data['sites'] = $siteArray;
 
-        return $this->sendData(self::JIRAFE_API_APPLICATIONS.'/'.$appId .self::JIRAFE_API_RESOURCES, $data, $adminToken, self::HTTP_METHOD_POST);
+        return $this->_api->sendData(Jirafe_Api::JIRAFE_API_APPLICATIONS.'/'.$appId .Jirafe_Api::JIRAFE_API_RESOURCES, $data, $adminToken, Jirafe_Api::HTTP_METHOD_POST);
     }
 
 }
