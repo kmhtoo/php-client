@@ -24,5 +24,6 @@ interface Jirafe_Http_Interface
     public function getResponseStatus();
     public function getResponseMessage();
     public function getResponseBody();
+    public function request();
     
 }
