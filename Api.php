@@ -57,12 +57,17 @@ class Jirafe_Api
     
     function __construct ($httpClient)
     {
-        $this->_httpClient = $httpClient;
+        $this->setHttpClient ($httpClient);
     }
 
     public function setHttpClient ($httpClient)
     {
-        $this->_httpClient = $httpClient;
+        require_once 'Http/Interface.php';
+        if ($httpClient instanceof Jirafe_Http_Interface) {
+            $this->_httpClient = $httpClient;
+        } else {
+            throw new Exception('Http Client needs to implement Jirafe_Http_Interface.');
+        }
     }
 
     public function getHttpClient ()
@@ -200,7 +205,7 @@ class Jirafe_Api
                 }
             }
             $this->getHttpClient()->request($method);
-            $result = $this->_errorChecking($this->getHttpClient()->getLastResponse());
+            $result = $this->_errorChecking();
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
             return false;
@@ -208,14 +213,14 @@ class Jirafe_Api
         return $result;
     }
 
-    private function _errorChecking ($response)
+    private function _errorChecking ()
     {
         //check server response
-        if ($response->isError()) {
-            throw new Exception($response->getStatus() .' '. $response->getMessage());
+        if ($this->getHttpClient()->isReponseError()) {
+            throw new Exception($this->getHttpClient()->getResponseStatus() .' '. $this->getHttpClient()->getResponseMessage());
         }
         //TODO: dev mode returns debug toolbar remove it from output here
-        $reponseBody = preg_replace('/<!-- START of Symfony2 Web Debug Toolbar -->(.*?)<!-- END of Symfony2 Web Debug Toolbar -->/', '', $response->getBody());
+        $reponseBody = preg_replace('/<!-- START of Symfony2 Web Debug Toolbar -->(.*?)<!-- END of Symfony2 Web Debug Toolbar -->/', '', $this->getHttpClient()->getResponseBody());
         if(strpos($reponseBody,'You are not allowed to access this file.') !== false) {
             throw new Exception('Server Response: You are not allowed to access this file.');
         }
