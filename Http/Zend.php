@@ -13,32 +13,52 @@
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
-
 class Jirafe_Http_Zend extends Zend_Http_Client implements Jirafe_Http_Interface
 {
-    public function isReponseError ()
+
+    public function jirafeHttpSetUri ($uri)
     {
-        return $this->getLastResponse()->isError();         
+        return parent::setUri($uri);
     }
 
-    public function getResponseStatus ()
+    public function jirafeHttpSetParameterGet ($param, $value = null)
     {
-        return $this->getLastResponse()->getStatus();        
+        return parent::setParameterGet($param, $value);
     }
 
-    public function getResponseMessage ()
+    public function jirafeHttpSetParameterPost ($param, $value = null)
+    {
+        return parent::setParameterPost($param, $value);
+    }
+
+    public function jirafeHttpSetAuth ($user, $password = '', $type = null)
+    {
+        return parent::setAuth($user, $password = '', $type = self::AUTH_BASIC);
+    }
+
+    public function jirafeHttpIsReponseError ()
+    {
+        return $this->getLastResponse()->isError();
+    }
+
+    public function jirafeHttpGetResponseStatus ()
+    {
+        return $this->getLastResponse()->getStatus();
+    }
+
+    public function jirafeHttpGetResponseMessage ()
     {
         return $this->getLastResponse()->getMessage();
     }
 
-    public function getResponseBody ()
+    public function jirafeHttpGetResponseBody ()
     {
         return $this->getLastResponse()->getBody();
     }
-    
-    public function setAuth($user, $password = '', $type = null)
+
+    public function jirafeHttpRequest ($method)
     {
-        return parent::setAuth($user, $password = '', $type = self::AUTH_BASIC);
+        return parent::request($method);
     }
 
 }

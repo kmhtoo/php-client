@@ -185,15 +185,15 @@ class Jirafe_Api
         }
         
         //set up connection      
-        $this->getHttpClient()->setUri($this->getApiUrl($entryPoint));
+        $this->getHttpClient()->jirafeHttpSetUri($this->getApiUrl($entryPoint));
 
         if($adminToken) {
-            $this->getHttpClient()->setParameterGet('token', $adminToken);
+            $this->getHttpClient()->jirafeHttpSetParameterGet('token', $adminToken);
         }
         //$this->getHttpClient()->setParameterGet('XDEBUG_SESSION_START', 'switzer');
 
         if(!empty($httpAuth)) {
-            $this->getHttpClient()->setAuth($httpAuth['username'], $httpAuth['password']);
+            $this->getHttpClient()->jirafeHttpSetAuth($httpAuth['username'], $httpAuth['password']);
         }
 
         try {
@@ -201,10 +201,10 @@ class Jirafe_Api
             //loop over data items and add them as post/put parameters if requested
             if (is_array($data) && ($method == self::HTTP_METHOD_POST || $method == self::HTTP_METHOD_PUT)) {
                 foreach ($data as $parameter => $value) {
-                    $this->getHttpClient()->setParameterPost($parameter, $value);
+                    $this->getHttpClient()->jirafeHttpSetParameterPost($parameter, $value);
                 }
             }
-            $this->getHttpClient()->request($method);
+            $this->getHttpClient()->jirafeHttpRequest($method);
             $result = $this->_errorChecking();
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
@@ -216,11 +216,11 @@ class Jirafe_Api
     private function _errorChecking ()
     {
         //check server response
-        if ($this->getHttpClient()->isReponseError()) {
-            throw new Exception($this->getHttpClient()->getResponseStatus() .' '. $this->getHttpClient()->getResponseMessage());
+        if ($this->getHttpClient()->jirafeHttpIsReponseError()) {
+            throw new Exception($this->getHttpClient()->jirafeHttpGetResponseStatus() .' '. $this->getHttpClient()->jirafeHttpGetResponseMessage());
         }
         //TODO: dev mode returns debug toolbar remove it from output here
-        $reponseBody = preg_replace('/<!-- START of Symfony2 Web Debug Toolbar -->(.*?)<!-- END of Symfony2 Web Debug Toolbar -->/', '', $this->getHttpClient()->getResponseBody());
+        $reponseBody = preg_replace('/<!-- START of Symfony2 Web Debug Toolbar -->(.*?)<!-- END of Symfony2 Web Debug Toolbar -->/', '', $this->getHttpClient()->jirafeHttpGetResponseBody());
         if(strpos($reponseBody,'You are not allowed to access this file.') !== false) {
             throw new Exception('Server Response: You are not allowed to access this file.');
         }

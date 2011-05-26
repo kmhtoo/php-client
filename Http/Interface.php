@@ -13,17 +13,17 @@
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
-
 interface Jirafe_Http_Interface
 {
-    public function setUri($uri);
-    public function setParameterGet($param, $value = null);
-    public function setParameterPost($param, $value = null); 
-    public function setAuth($user, $pwd ='',$type = null);
-    public function isReponseError();
-    public function getResponseStatus();
-    public function getResponseMessage();
-    public function getResponseBody();
-    public function request();
+    
+    public function jirafeHttpSetUri($uri);
+    public function jirafeHttpSetParameterGet($param, $value = null);
+    public function jirafeHttpSetParameterPost($param, $value = null); 
+    public function jirafeHttpSetAuth($user, $pwd ='',$type = null);
+    public function jirafeHttpIsReponseError();
+    public function jirafeHttpGetResponseStatus();
+    public function jirafeHttpGetResponseMessage();
+    public function jirafeHttpGetResponseBody();
+    public function jirafeHttpRequest($method);
     
 }
