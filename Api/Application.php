@@ -33,7 +33,7 @@ class Jirafe_Api_Application
     public function create ($name, $url)
     {
         if(empty($name) || empty($url)) {
-            throw new Exception('Application name and application url can\'t be empty');
+            $this->_api->throwException('Application name and application url can\'t be empty');
         }
         $data = array();
         $data['name'] = $name;
@@ -50,7 +50,7 @@ class Jirafe_Api_Application
     public function getInfo ($appId, $adminToken)
     {
         if(empty($appId) || empty($adminToken)) {
-            throw new Exception('Application id and admin token can\'t be empty');
+            $this->_api->throwException('Application id and admin token can\'t be empty');
         }
         return $this->_api->sendData(Jirafe_Api::JIRAFE_API_APPLICATIONS.'/'.$appId, false, $adminToken, Jirafe_Api::HTTP_METHOD_GET);
     }
@@ -64,7 +64,7 @@ class Jirafe_Api_Application
     public function getLinkedSites ($appId, $adminToken)
     {
         if(empty($appId) || empty($adminToken)) {
-            throw new Exception('Application id and admin token can\'t be empty');
+            $this->_api->throwException('Application id and admin token can\'t be empty');
         }
         return $this->_api->sendData(Jirafe_Api::JIRAFE_API_APPLICATIONS.'/'.$appId.Jirafe_Api::JIRAFE_API_SITES, false, $adminToken, Jirafe_Api::HTTP_METHOD_GET);
     }
@@ -78,7 +78,7 @@ class Jirafe_Api_Application
     public function update ($appId, $adminToken, $url)
     {
         if(empty($appId) || empty($adminToken) || empty($url)) {
-            throw new Exception('Application id, admin token and url can\'t be empty');
+            $this->_api->throwException('Application id, admin token and url can\'t be empty');
         }
         $data = array();
         $data['url'] = $url;
@@ -94,7 +94,7 @@ class Jirafe_Api_Application
     public function delete ($appId, $adminToken)
     {
         if(empty($appId) || empty($adminToken)) {
-            throw new Exception('Application id and admin token can\'t be empty');
+            $this->_api->throwException('Application id and admin token can\'t be empty');
         }
         return $this->_api->sendData(Jirafe_Api::JIRAFE_API_APPLICATIONS.'/'.$appId, false, $adminToken, Jirafe_Api::HTTP_METHOD_DELETE);
     }

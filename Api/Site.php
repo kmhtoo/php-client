@@ -33,7 +33,7 @@ class Jirafe_Api_Site
     public function getInfo ($siteId, $adminToken)
     {
         if(empty($siteId) || empty($adminToken)) {
-            throw new Exception('Site id and admin token can\'t be empty');
+            $this->_api->throwException('Site id and admin token can\'t be empty');
         }
         return $this->_api->sendData(Jirafe_Api::JIRAFE_API_SITES.'/'.$siteId, false, $adminToken, Jirafe_Api::HTTP_METHOD_GET);
     }
@@ -47,7 +47,7 @@ class Jirafe_Api_Site
     public function getLinkedUsers ($siteId, $adminToken)
     {
         if(empty($siteId) || empty($adminToken)) {
-            throw new Exception('Site id and admin token can\'t be empty');
+            $this->_api->throwException('Site id and admin token can\'t be empty');
         }
         return $this->_api->sendData(Jirafe_Api::JIRAFE_API_SITES.'/'.$siteId.Jirafe_Api::JIRAFE_API_USERS, false, $adminToken, Jirafe_Api::HTTP_METHOD_GET);
     }
@@ -62,7 +62,7 @@ class Jirafe_Api_Site
     public function update ($siteId, $adminToken, $timezone)
     {
         if(empty($siteId) || empty($adminToken)) {
-            throw new Exception('Site id and admin token can\'t be empty');
+            $this->_api->throwException('Site id and admin token can\'t be empty');
         }
         $data = array();
         $data['timezone'] = $timezone;
@@ -78,7 +78,7 @@ class Jirafe_Api_Site
     public function delete ($siteId, $adminToken)
     {
         if(empty($siteId) || empty($adminToken)) {
-            throw new Exception('Site id and admin token can\'t be empty');
+            $this->_api->throwException('Site id and admin token can\'t be empty');
         }
         return $this->_api->sendData(Jirafe_Api::JIRAFE_API_SITES.'/'.$siteId, false, $adminToken, Jirafe_Api::HTTP_METHOD_DELETE);
     }

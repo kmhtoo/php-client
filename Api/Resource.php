@@ -43,7 +43,7 @@ class Jirafe_Api_Resource
     public function sync ($appId, $adminToken, $userArray = array(), $siteArray = array())
     {
         if(empty($appId) || empty($adminToken)) {
-            throw new Exception('$appId and $adminToken can\'t be empty');
+            $this->_api->throwException('$appId and $adminToken can\'t be empty');
         }
         $data = array();
         $data['users'] = $userArray;

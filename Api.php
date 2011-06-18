@@ -66,7 +66,7 @@ class Jirafe_Api
         if ($httpClient instanceof Jirafe_Http_Interface) {
             $this->_httpClient = $httpClient;
         } else {
-            throw new Exception('Http client needs to implement Jirafe_Http_Interface.');
+            $this->throwException('Http client needs to implement Jirafe_Http_Interface.');
         }
     }
 
@@ -81,7 +81,7 @@ class Jirafe_Api
         if ($this->_httpClient instanceof Jirafe_Http_Interface) {
             return $this->_httpClient;
         } else {
-            throw new Exception('No http client available.');
+            $this->throwException('No http client available.');
         }        
     }
 
@@ -240,7 +240,7 @@ class Jirafe_Api
     {
 
         if(!in_array('ssl', stream_get_transports())) {
-            throw new Exception("The Jirafe plugin requires outgoing connectivity via ssl to communicate securely with our server to function. Please enable ssl support for php or get your webhosting company to do it for you.");
+            $this->throwException('The Jirafe plugin requires outgoing connectivity via ssl to communicate securely with our server to function. Please enable ssl support for php or get your webhosting company to do it for you.');
         }
         
         //set up connection      
@@ -266,8 +266,8 @@ class Jirafe_Api
             $this->getHttpClient()->jirafeHttpRequest($method);
             $result = $this->_errorChecking();
         } catch (Exception $e) {
-            throw new Exception($e->getMessage());
-            return false;
+            //log here for debug
+            $this->throwException($e->getMessage());
         }
         return $result;
     }
@@ -281,30 +281,41 @@ class Jirafe_Api
     {
         //check server response
         if ($this->getHttpClient()->jirafeHttpIsReponseError()) {
-            throw new Exception($this->getHttpClient()->jirafeHttpGetResponseStatus() .' '. $this->getHttpClient()->jirafeHttpGetResponseMessage());
+            $this->throwException($this->getHttpClient()->jirafeHttpGetResponseStatus() .' '. $this->getHttpClient()->jirafeHttpGetResponseMessage());
         }
         //TODO: dev mode returns debug toolbar remove it from output here
         $reponseBody = preg_replace('/<!-- START of Symfony2 Web Debug Toolbar -->(.*?)<!-- END of Symfony2 Web Debug Toolbar -->/', '', $this->getHttpClient()->jirafeHttpGetResponseBody());
         if(strpos($reponseBody,'You are not allowed to access this file.') !== false) {
-            throw new Exception('Server Response: You are not allowed to access this file.');
+            $this->throwException('Server Response: You are not allowed to access this file.');
         }
         if(strpos($reponseBody,'Call Stack:') !== false) {
-            throw new Exception('Server Response contains errors');
+            $this->throwException('Server Response contains errors');
         }
         if(strpos($reponseBody,'Fatal error:') !== false) {
-            throw new Exception('Server Response contains errors');
+            $this->throwException('Server Response contains errors');
         }
 
         //check for returned errors
         $result = json_decode($reponseBody,true);
         if(isset($result['errors']) && !empty($result['errors'])) {
             if(is_array($result['errors'])) {
-                throw new Exception(implode(',',$result['errors']));                
+                $this->throwException(implode(',',$result['errors']));                
             } else {
-                throw new Exception($result['errors']);         
+                $this->throwException($result['errors']);         
             }
         }
         return $result;
+    }
+    
+    /**
+     * Throw a Jirafe_Exception
+     * 
+     * @param string $msg 
+     */
+    public function throwException ($msg='')
+    {
+        require_once 'Exception.php';
+        throw new Jirafe_Exception($msg);
     }
 
 }

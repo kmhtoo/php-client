@@ -34,7 +34,7 @@ class Jirafe_Api_Log
     public function sendLog ($adminToken, $data=array())
     {
         if(empty($adminToken)) {
-            throw new Exception('Admin token can\'t be empty');
+            $this->_api->throwException('Admin token can\'t be empty');
         }
         return $this->_api->sendData(Jirafe_Api::JIRAFE_API_LOGS, $data, $adminToken, Jirafe_Api::HTTP_METHOD_POST);
     }
