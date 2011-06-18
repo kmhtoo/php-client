@@ -15,15 +15,77 @@
 
 interface Jirafe_Http_Interface
 {
-    
-    public function jirafeHttpSetUri($uri);
-    public function jirafeHttpSetParameterGet($param, $value = null);
-    public function jirafeHttpSetParameterPost($param, $value = null); 
-    public function jirafeHttpSetAuth($user, $pwd ='',$type = null);
-    public function jirafeHttpIsReponseError();
-    public function jirafeHttpGetResponseStatus();
-    public function jirafeHttpGetResponseMessage();
-    public function jirafeHttpGetResponseBody();
-    public function jirafeHttpRequest($method);
-    
+    /**
+     *  interface required for using the Jirafe api class
+     */
+
+    /**
+     *  set the url to connect to
+     *  
+     * @param string $uri
+     */
+    public function jirafeHttpSetUri ($uri);
+
+    /**
+     *  set a GET parameter for the next request
+     * 
+     *  @param string $param
+     *  @param string $value (optional)
+     */
+    public function jirafeHttpSetParameterGet ($param, $value = null);
+
+    /**
+     *  set a POST parameter for the next request
+     * 
+     *  @param string $param
+     *  @param string $value (optional)
+     */
+    public function jirafeHttpSetParameterPost ($param, $value = null);
+
+    /**
+     *  set http authentification parameters for the next request
+     * 
+     *  @param string $param
+     *  @param string $value (optional)
+     *  @param string $type (optional)
+     */
+    public function jirafeHttpSetAuth ($user, $pwd ='', $type = null);
+
+    /**
+     *  is last response an error?
+     * 
+     *  @return bool
+     */
+    public function jirafeHttpIsReponseError ();
+
+    /**
+     *  return last response status (200,404,501 etc)
+     * 
+     *  @return int
+     */
+    public function jirafeHttpGetResponseStatus ();
+
+    /**
+     *  return last response message
+     * 
+     *  @return string
+     */
+    public function jirafeHttpGetResponseMessage ();
+
+    /**
+     *  return the body of the last response 
+     * 
+     *  @return string
+     */
+    public function jirafeHttpGetResponseBody ();
+
+    /**
+     *  send the request to the api
+     * 
+     *  @param string $method
+     *  @see Jirafe_Api for methods
+     * 
+     *  @return string
+     */
+    public function jirafeHttpRequest ($method);
 }

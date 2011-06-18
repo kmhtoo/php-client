@@ -60,6 +60,11 @@ class Jirafe_Api
         $this->setHttpClient ($httpClient);
     }
 
+    /**
+     * set http client to user for any api http requests
+     * 
+     * @param Jirafe_Http_Interface $httpClient 
+     */
     public function setHttpClient ($httpClient)
     {
         require_once 'Http/Interface.php';
@@ -70,11 +75,21 @@ class Jirafe_Api
         }
     }
 
+    /**
+     * retrieve http client
+     * 
+     * @return Jirafe_Http_Interface 
+     */
     public function getHttpClient ()
     {
         return $this->_httpClient;
     }
 
+    /**
+     * retrieve application end point object
+     * 
+     * @return Jirafe_Api_Application 
+     */
     public function getApplication()
     {
         if($this->_application === null) {
@@ -84,6 +99,11 @@ class Jirafe_Api
         return $this->_application;
     }
     
+    /**
+     * retrieve log end point object
+     * 
+     * @return Jirafe_Api_Log 
+     */
     public function getLog()
     {
         if($this->_log === null) {
@@ -93,6 +113,11 @@ class Jirafe_Api
         return $this->_log;
     }
     
+    /**
+     * retrieve resource end point object
+     * 
+     * @return Jirafe_Api_Resource 
+     */
     public function getResource()
     {
         if($this->_resource === null) {
@@ -102,6 +127,11 @@ class Jirafe_Api
         return $this->_resource;
     }
     
+    /**
+     * retrieve site end point object
+     * 
+     * @return Jirafe_Api_Site 
+     */    
     public function getSite()
     {
         if($this->_site === null) {
@@ -111,6 +141,11 @@ class Jirafe_Api
         return $this->_site;
     }
     
+    /**
+     * retrieve user end point object
+     * 
+     * @return Jirafe_Api_User 
+     */     
     public function getUser()
     {
         if($this->_user === null) {
@@ -162,11 +197,24 @@ class Jirafe_Api
         return rtrim(self::JIRAFE_API_SERVER, '/') . '/' . ltrim($filename, '/');
     }
     
+    /**
+     * Returns the URL of the piwik installation
+     *
+     * @return string
+     */    
     public function getPiwikBaseUrl()
     {
         return rtrim(self::JIRAFE_PIWIK_BASE_URL, '/') . '/' ;
     }
 
+    /**
+     * construct documenation url for given version, platform and type (user or troubleshooting)
+     * 
+     * @param string $platform
+     * @param string $type
+     * @param string $version
+     * @return string 
+     */
     public function getDocUrl($platform, $type='user', $version=null)
     {
         if ($version) {
@@ -176,6 +224,17 @@ class Jirafe_Api
         }
     }
 
+    /**
+     * send data to api at given entrypoint via http client and chosen method
+     * succesful reponse is returned JSON decoded to array
+     * 
+     * @param string $entryPoint
+     * @param array $data
+     * @param string $adminToken optional
+     * @param string $method 
+     * @param array $httpAuth
+     * @return bool|array 
+     */
     public function sendData ($entryPoint, $data, $adminToken = false,
             $method = self::HTTP_METHOD_POST, $httpAuth = array())
     {
@@ -213,6 +272,11 @@ class Jirafe_Api
         return $result;
     }
 
+    /**
+     * check the last response retrieved from the api for errors
+     * 
+     * @return array $result 
+     */
     private function _errorChecking ()
     {
         //check server response
