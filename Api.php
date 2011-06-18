@@ -55,11 +55,6 @@ class Jirafe_Api
     private $_site = null;
     private $_user = null;
     
-    function __construct ($httpClient)
-    {
-        $this->setHttpClient ($httpClient);
-    }
-
     /**
      * set http client to user for any api http requests
      * 
@@ -71,7 +66,7 @@ class Jirafe_Api
         if ($httpClient instanceof Jirafe_Http_Interface) {
             $this->_httpClient = $httpClient;
         } else {
-            throw new Exception('Http Client needs to implement Jirafe_Http_Interface.');
+            throw new Exception('Http client needs to implement Jirafe_Http_Interface.');
         }
     }
 
@@ -82,7 +77,12 @@ class Jirafe_Api
      */
     public function getHttpClient ()
     {
-        return $this->_httpClient;
+        require_once 'Http/Interface.php';
+        if ($this->_httpClient instanceof Jirafe_Http_Interface) {
+            return $this->_httpClient;
+        } else {
+            throw new Exception('No http client available.');
+        }        
     }
 
     /**
