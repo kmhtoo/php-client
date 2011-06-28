@@ -77,24 +77,26 @@ abstract class Jirafe_Api_Resource
      * Makes get request to the resource.
      *
      * @param   array   $query  resource query parameters
+     * @param   string  $token  override token
      *
      * @return  Jirafe_HttpConnection_Response
      */
-    public function doGet(array $query = array())
+    public function doGet(array $query = array(), $token = null)
     {
-        return $this->client->get($this->getPath(), $query);
+        return $this->client->get($this->getPath(), $query, $token);
     }
 
     /**
      * Makes head request to the resource.
      *
      * @param   array   $query  resource query parameters
+     * @param   string  $token  override token
      *
      * @return  Jirafe_HttpConnection_Response
      */
-    public function doHead(array $query = array())
+    public function doHead(array $query = array(), $token = null)
     {
-        return $this->client->head($this->getPath(), $query);
+        return $this->client->head($this->getPath(), $query, $token);
     }
 
     /**
@@ -102,12 +104,13 @@ abstract class Jirafe_Api_Resource
      *
      * @param   array   $query      resource query parameters
      * @param   array   $parameters resource post parameters
+     * @param   string  $token      override token
      *
      * @return  Jirafe_HttpConnection_Response
      */
-    public function doPut(array $query = array(), array $parameters = array())
+    public function doPut(array $query = array(), array $parameters = array(), $token = null)
     {
-        return $this->client->put($this->getPath(), $query, $parameters);
+        return $this->client->put($this->getPath(), $query, $parameters, $token);
     }
 
     /**
@@ -115,11 +118,12 @@ abstract class Jirafe_Api_Resource
      *
      * @param   array   $query      resource query parameters
      * @param   array   $parameters resource post parameters
+     * @param   string  $token      override token
      *
      * @return  Jirafe_HttpConnection_Response
      */
-    public function doDelete(array $query = array(), array $parameters = array())
+    public function doDelete(array $query = array(), array $parameters = array(), $token = null)
     {
-        return $this->client->delete($this->getPath(), $query, $parameters);
+        return $this->client->delete($this->getPath(), $query, $parameters, $token);
     }
 }

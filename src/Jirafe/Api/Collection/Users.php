@@ -65,7 +65,7 @@ class Jirafe_Api_Collection_Users extends Jirafe_Api_Collection
      */
     public function create($username, $email)
     {
-        $response = $this->doPost(array(), array('username' => $username, 'email' => $email));
+        $response = $this->doPost(array(), array('username' => $username, 'email' => $email), false);
 
         if ($response->hasError()) {
             throw new Jirafe_Exception(sprintf(

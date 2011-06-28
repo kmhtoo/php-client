@@ -73,6 +73,37 @@ class Jirafe_ClientTest extends PHPUnit_Framework_TestCase
     /**
      * @test
      */
+    public function shouldMakeGetRequestWithCustomToken()
+    {
+        $this->connectionMock
+            ->expects($this->once())
+            ->method('get')
+            ->with('/test', array(
+                'token'  => 'CUSTOM_TOKEN',
+                'custom' => '4 8 15 16 23 42'
+            ));
+
+        $this->client->get('/test', array('custom' => '4 8 15 16 23 42'), 'CUSTOM_TOKEN');
+    }
+
+    /**
+     * @test
+     */
+    public function shouldMakeGetRequestWithoutToken()
+    {
+        $this->connectionMock
+            ->expects($this->once())
+            ->method('get')
+            ->with('/test', array(
+                'custom' => '4 8 15 16 23 42'
+            ));
+
+        $this->client->get('/test', array('custom' => '4 8 15 16 23 42'), false);
+    }
+
+    /**
+     * @test
+     */
     public function shouldMakeHeadRequestWithToken()
     {
         $this->connectionMock
@@ -84,6 +115,37 @@ class Jirafe_ClientTest extends PHPUnit_Framework_TestCase
             ));
 
         $this->client->head('/test', array('custom' => '4 8 15 16 23 42'));
+    }
+
+    /**
+     * @test
+     */
+    public function shouldMakeHeadRequestWithCustomToken()
+    {
+        $this->connectionMock
+            ->expects($this->once())
+            ->method('head')
+            ->with('/test', array(
+                'token'  => 'CUSTOM_TOKEN',
+                'custom' => '4 8 15 16 23 42'
+            ));
+
+        $this->client->head('/test', array('custom' => '4 8 15 16 23 42'), 'CUSTOM_TOKEN');
+    }
+
+    /**
+     * @test
+     */
+    public function shouldMakeHeadRequestWithoutToken()
+    {
+        $this->connectionMock
+            ->expects($this->once())
+            ->method('head')
+            ->with('/test', array(
+                'custom' => '4 8 15 16 23 42'
+            ));
+
+        $this->client->head('/test', array('custom' => '4 8 15 16 23 42'), false);
     }
 
     /**
@@ -105,6 +167,37 @@ class Jirafe_ClientTest extends PHPUnit_Framework_TestCase
     /**
      * @test
      */
+    public function shouldMakePostRequestWithCustomToken()
+    {
+        $this->connectionMock
+            ->expects($this->once())
+            ->method('post')
+            ->with('/test', array(
+                'token'  => 'ADMIN',
+                'custom' => '4 8 15 16 23 42'
+            ), array('name' => 'Jacob'));
+
+        $this->client->post('/test', array('custom' => '4 8 15 16 23 42'), array('name' => 'Jacob'), 'ADMIN');
+    }
+
+    /**
+     * @test
+     */
+    public function shouldMakePostRequestWithoutToken()
+    {
+        $this->connectionMock
+            ->expects($this->once())
+            ->method('post')
+            ->with('/test', array(
+                'custom' => '4 8 15 16 23 42'
+            ), array('name' => 'Jacob'));
+
+        $this->client->post('/test', array('custom' => '4 8 15 16 23 42'), array('name' => 'Jacob'), false);
+    }
+
+    /**
+     * @test
+     */
     public function shouldMakePutRequestWithToken()
     {
         $this->connectionMock
@@ -116,6 +209,37 @@ class Jirafe_ClientTest extends PHPUnit_Framework_TestCase
             ), array('name' => 'Jacob'));
 
         $this->client->put('/test', array('custom' => '4 8 15 16 23 42'), array('name' => 'Jacob'));
+    }
+
+    /**
+     * @test
+     */
+    public function shouldMakePutRequestWithCustomToken()
+    {
+        $this->connectionMock
+            ->expects($this->once())
+            ->method('put')
+            ->with('/test', array(
+                'token'  => 'ADMIN',
+                'custom' => '4 8 15 16 23 42'
+            ), array('name' => 'Jacob'));
+
+        $this->client->put('/test', array('custom' => '4 8 15 16 23 42'), array('name' => 'Jacob'), 'ADMIN');
+    }
+
+    /**
+     * @test
+     */
+    public function shouldMakePutRequestWithoutToken()
+    {
+        $this->connectionMock
+            ->expects($this->once())
+            ->method('put')
+            ->with('/test', array(
+                'custom' => '4 8 15 16 23 42'
+            ), array('name' => 'Jacob'));
+
+        $this->client->put('/test', array('custom' => '4 8 15 16 23 42'), array('name' => 'Jacob'), false);
     }
 
     /**
@@ -133,6 +257,41 @@ class Jirafe_ClientTest extends PHPUnit_Framework_TestCase
 
         $this->client->delete(
             '/test', array('custom' => '4 8 15 16 23 42'), array('name' => 'Jacob')
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function shouldMakeDeleteRequestWithCustomToken()
+    {
+        $this->connectionMock
+            ->expects($this->once())
+            ->method('delete')
+            ->with('/test', array(
+                'token'  => 'ADMIN_TOKEN',
+                'custom' => '4 8 15 16 23 42'
+            ), array('name' => 'Jacob'));
+
+        $this->client->delete(
+            '/test', array('custom' => '4 8 15 16 23 42'), array('name' => 'Jacob'), 'ADMIN_TOKEN'
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function shouldMakeDeleteRequestWithoutToken()
+    {
+        $this->connectionMock
+            ->expects($this->once())
+            ->method('delete')
+            ->with('/test', array(
+                'custom' => '4 8 15 16 23 42'
+            ), array('name' => 'Jacob'));
+
+        $this->client->delete(
+            '/test', array('custom' => '4 8 15 16 23 42'), array('name' => 'Jacob'), false
         );
     }
 }

@@ -13,7 +13,7 @@
  *
  * @author knplabs.com
  */
-class Jirafe_Client implements Jirafe_HttpConnection_Interface
+class Jirafe_Client
 {
     private $token;
     private $connection;
@@ -24,7 +24,7 @@ class Jirafe_Client implements Jirafe_HttpConnection_Interface
      * @param   string                          $token      API access token
      * @param   Jirafe_HttpConnection_Interface $connection optional connection instance
      */
-    public function __construct($token, Jirafe_HttpConnection_Interface $connection = null)
+    public function __construct($token = null, Jirafe_HttpConnection_Interface $connection = null)
     {
         $this->token = $token;
 
@@ -82,51 +82,99 @@ class Jirafe_Client implements Jirafe_HttpConnection_Interface
     }
 
     /**
-     * @see Jirafe_HttpConnection_Interface::get()
+     * Makes get request to the service.
+     *
+     * @param   string  $path   relative resource path
+     * @param   array   $query  resource query string
+     * @param   string  $token  optional token override
+     *
+     * @return  Jirafe_HttpConnection_Response
      */
-    public function get($path, array $query = array())
+    public function get($path, array $query = array(), $token = null)
     {
-        $query += array('token' => $this->token);
+        $token = null !== $token ? $token : $this->token;
+        if (false !== $token) {
+            $query += array('token' => $token);
+        }
 
         return $this->connection->get($path, $query);
     }
 
     /**
-     * @see Jirafe_HttpConnection_Interface::head()
+     * Makes head request to the service.
+     *
+     * @param   string  $path   relative resource path
+     * @param   array   $query  resource query string
+     * @param   string  $token  optional token override
+     *
+     * @return  Jirafe_HttpConnection_Response
      */
-    public function head($path, array $query = array())
+    public function head($path, array $query = array(), $token = null)
     {
-        $query += array('token' => $this->token);
+        $token = null !== $token ? $token : $this->token;
+        if (false !== $token) {
+            $query += array('token' => $token);
+        }
 
         return $this->connection->head($path, $query);
     }
 
     /**
-     * @see Jirafe_HttpConnection_Interface::post()
+     * Makes post request to the service.
+     *
+     * @param   string  $path       relative resource path
+     * @param   array   $query      resource query string
+     * @param   array   $parameters resource post parameters
+     * @param   string  $token      optional token override
+     *
+     * @return  Jirafe_HttpConnection_Response
      */
-    public function post($path, array $query = array(), array $parameters = array())
+    public function post($path, array $query = array(), array $parameters = array(), $token = null)
     {
-        $query += array('token' => $this->token);
+        $token = null !== $token ? $token : $this->token;
+        if (false !== $token) {
+            $query += array('token' => $token);
+        }
 
         return $this->connection->post($path, $query, $parameters);
     }
 
     /**
-     * @see Jirafe_HttpConnection_Interface::put()
+     * Makes put request to the service.
+     *
+     * @param   string  $path       relative resource path
+     * @param   array   $query      resource query string
+     * @param   array   $parameters resource post parameters
+     * @param   string  $token      optional token override
+     *
+     * @return  Jirafe_HttpConnection_Response
      */
-    public function put($path, array $query = array(), array $parameters = array())
+    public function put($path, array $query = array(), array $parameters = array(), $token = null)
     {
-        $query += array('token' => $this->token);
+        $token = null !== $token ? $token : $this->token;
+        if (false !== $token) {
+            $query += array('token' => $token);
+        }
 
         return $this->connection->put($path, $query, $parameters);
     }
 
     /**
-     * @see Jirafe_HttpConnection_Interface::delete()
+     * Makes delete request to the service.
+     *
+     * @param   string  $path       relative resource path
+     * @param   array   $query      resource query string
+     * @param   array   $parameters resource post parameters
+     * @param   string  $token      optional token override
+     *
+     * @return  Jirafe_HttpConnection_Response
      */
-    public function delete($path, array $query = array(), array $parameters = array())
+    public function delete($path, array $query = array(), array $parameters = array(), $token = null)
     {
-        $query += array('token' => $this->token);
+        $token = null !== $token ? $token : $this->token;
+        if (false !== $token) {
+            $query += array('token' => $token);
+        }
 
         return $this->connection->delete($path, $query, $parameters);
     }

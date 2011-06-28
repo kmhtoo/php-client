@@ -70,12 +70,13 @@ abstract class Jirafe_Api_Collection
      * Makes get request to the API with current resource path.
      *
      * @param   array   $query  query string parameters
+     * @param   string  $token  override token
      *
      * @return  Jirafe_HttpConnection_Response
      */
-    public function doGet(array $query = array())
+    public function doGet(array $query = array(), $token = null)
     {
-        return $this->client->get($this->getPath(), $query);
+        return $this->client->get($this->getPath(), $query, $token);
     }
 
     /**
@@ -83,12 +84,13 @@ abstract class Jirafe_Api_Collection
      *
      * @param   array   $query      query string parameters
      * @param   array   $parameters post parameters
+     * @param   string  $token      override token
      *
      * @return  Jirafe_HttpConnection_Response
      */
-    public function doPost(array $query = array(), array $parameters = array())
+    public function doPost(array $query = array(), array $parameters = array(), $token = null)
     {
-        return $this->client->post($this->getPath(), $query, $parameters);
+        return $this->client->post($this->getPath(), $query, $parameters, $token);
     }
 
     /**

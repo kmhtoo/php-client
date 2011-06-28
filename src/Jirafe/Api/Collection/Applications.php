@@ -47,7 +47,7 @@ class Jirafe_Api_Collection_Applications extends Jirafe_Api_Collection
      */
     public function create($name, $url)
     {
-        $response = $this->doPost(array(), array('name' => $name, 'url' => $url));
+        $response = $this->doPost(array(), array('name' => $name, 'url' => $url), false);
 
         if ($response->hasError()) {
             throw new Jirafe_Exception(sprintf(

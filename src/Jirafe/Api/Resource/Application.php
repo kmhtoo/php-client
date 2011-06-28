@@ -45,4 +45,14 @@ class Jirafe_Api_Resource_Application extends Jirafe_Api_Object
 
         return $sites;
     }
+
+    /**
+     * Returns applications resources collection (sync API).
+     *
+     * @return  Jirafe_Api_Collection_Resources
+     */
+    public function resources()
+    {
+        return new Jirafe_Api_Collection_Resources($this, $this->getClient());
+    }
 }

@@ -29,6 +29,16 @@ class Jirafe_Api_Resource_ApplicationTest extends PHPUnit_Framework_TestCase
     /**
      * @test
      */
+    public function shouldProvideResourcesCollection()
+    {
+        $resources = $this->application->resources();
+
+        $this->assertInstanceOf('Jirafe_Api_Collection_Resources', $resources);
+    }
+
+    /**
+     * @test
+     */
     public function shouldProvideSiteResource()
     {
         $site = $this->application->sites(2);
