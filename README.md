@@ -1,4 +1,4 @@
-# JirafeClient
+# Jirafe_Client
 
 PHP 5.2 client for [Jirafe](http://jirafe.com/) web analytics.
 
@@ -29,7 +29,7 @@ in it's hash after creation:
 ``` php
 <?php
 
-$client   = new JirafeClient();
+$client   = new Jirafe_Client();
 $userHash = $client->users()->create('vjousse', 'vjousse@knplabs.com');
 ```
 
@@ -52,7 +52,7 @@ that gives rights to read that user's info:
 ``` php
 <?php
 
-$client  = new JirafeClient(API_TOKEN);
+$client  = new Jirafe_Client(API_TOKEN);
 $userRes = $client->users('jack');
 // or $userRes = $client->users()->get('jack');
 ```
@@ -98,7 +98,7 @@ return new token in it's hash after creation:
 ``` php
 <?php
 
-$client  = new JirafeClient();
+$client  = new Jirafe_Client();
 $appHash = $client->applications()->create('new app', 'http://newapp.com');
 ```
 
@@ -122,7 +122,7 @@ that gives rights to read that application:
 ``` php
 <?php
 
-$client = new JirafeClient(API_TOKEN);
+$client = new Jirafe_Client(API_TOKEN);
 $appRes = $client->applications(23);
 // or $appRes = $client->applications()->get(23);
 ```
@@ -188,7 +188,7 @@ initialized with token, that give rights to read that application:
 ``` php
 <?php
 
-$client    = new JirafeClient(API_TOKEN);
+$client    = new Jirafe_Client(API_TOKEN);
 $sitesHash = $client->applications(23)->sites()->fetchAll();
 // or $sitesHash = $client->applications()->get(23)->sites()->fetchAll();
 ```
@@ -229,7 +229,7 @@ initialized with token, that gives rights to read that application and site:
 ``` php
 <?php
 
-$client  = new JirafeClient(API_TOKEN);
+$client  = new Jirafe_Client(API_TOKEN);
 $siteRes = $client->applications(23)->sites(324);
 // or $siteRes = $client->applications()->get(23)->sites()->get(324);
 ```
@@ -290,6 +290,99 @@ Available resource operations are:
 
     $siteRes->delete();
     ```
+
+## Site reports
+
+To get access to site reports, you'll need a client, initialized with token,
+that gives you access to this specific site.
+
+First, you'll need to get site resource:
+
+``` php
+<?php
+
+$client  = new Jirafe_Client(API_TOKEN);
+$siteRes = $client->applications(23)->sites(324);
+// or $siteRes = $client->applications()->get(23)->sites()->get(324);
+```
+
+Then, you must choose from one of 8 report types:
+
+``` php
+<?php
+
+$specificSiteReports = $siteRes->visits();
+$specificSiteReports = $siteRes->visitors();
+$specificSiteReports = $siteRes->bounces();
+$specificSiteReports = $siteRes->average();
+$specificSiteReports = $siteRes->revenues();
+$specificSiteReports = $siteRes->keywords();
+$specificSiteReports = $siteRes->referers();
+$specificSiteReports = $siteRes->exits();
+```
+
+And then, you can get specific report with `fetch(...)` or `fetch...(...)` methods.
+For example, to get visits per hour on specific day, you should call:
+
+``` php
+<?php
+
+$repHash = $siteRes->visits()->fetch('yesterday', array('hour'));
+```
+
+First argument is a date, second is array of breakdown parameters (`hour`, `day`).
+
+`$repHash` in that case will hold something like:
+
+```
+Array
+(
+    [0] => Array
+        (
+            [hour] => 0
+            [visits] => 40
+        )
+
+    [1] => Array
+        (
+            [hour] => 1
+            [visits] => 32
+        )
+
+    [2] => Array
+        (
+            [hour] => 2
+            [visits] => 0
+        )
+    ...
+)
+```
+
+## Sync API
+
+To be able to run sync process, you'll need and application admin token and
+client instance, initializes with it.
+
+``` php
+<?php
+
+$client     = new Jirafe_Client(ADMIN_TOKEN);
+$syncedHash = $client->applications(23)->resources()->sync(
+    array(
+        array('description' => 'site1', 'url' => 'http://site1'),
+        array('description' => 'site1', 'url' => 'http://site2')
+    ),
+    array(
+        array('email' => 'everzet@knplabs.com', 'username' => 'everzet'),
+        array('email' => 'vjousse@knplabs.com', 'username' => 'vjousse')
+    )
+);
+```
+
+First argument is array of sites and their values, second is users array.
+Jirafe will check availability of that resources in it and will create them
+if needed. The return value of `sync()` method is hash of sites and users,
+synced with specified application, their id's and other info.
 
 Copyright
 ---------
