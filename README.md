@@ -54,7 +54,7 @@ that gives rights to read that user's info:
 
 $client  = new JirafeClient(API_TOKEN);
 $userRes = $client->users('jack');
-// or $appRes = $client->users()->get('jack');
+// or $userRes = $client->users()->get('jack');
 ```
 
 `$userRes` is `Jirafe_Api_Resource_User` instance, with which you can
