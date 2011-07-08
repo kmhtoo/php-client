@@ -62,7 +62,7 @@ class Jirafe_Api
      */
     public function setHttpClient ($httpClient)
     {
-        require_once 'Http/Interface.php';
+        //require_once 'Http/Interface.php';
         if ($httpClient instanceof Jirafe_Http_Interface) {
             $this->_httpClient = $httpClient;
         } else {
@@ -77,7 +77,7 @@ class Jirafe_Api
      */
     public function getHttpClient ()
     {
-        require_once 'Http/Interface.php';
+        //require_once 'Http/Interface.php';
         if ($this->_httpClient instanceof Jirafe_Http_Interface) {
             return $this->_httpClient;
         } else {
@@ -93,7 +93,7 @@ class Jirafe_Api
     public function getApplication()
     {
         if($this->_application === null) {
-            require_once 'Api/Application.php';
+            //require_once 'Api/Application.php';
             $this->_application = new Jirafe_Api_Application($this);
         }
         return $this->_application;
@@ -107,7 +107,7 @@ class Jirafe_Api
     public function getLog()
     {
         if($this->_log === null) {
-            require_once 'Api/Log.php';
+            //require_once 'Api/Log.php';
             $this->_log = new Jirafe_Api_Log($this);
         }
         return $this->_log;
@@ -121,7 +121,7 @@ class Jirafe_Api
     public function getResource()
     {
         if($this->_resource === null) {
-            require_once 'Api/Resource.php';
+            //require_once 'Api/Resource.php';
             $this->_resource = new Jirafe_Api_Resource($this);
         }
         return $this->_resource;
@@ -135,7 +135,7 @@ class Jirafe_Api
     public function getSite()
     {
         if($this->_site === null) {
-            require_once 'Api/Site.php';
+            //require_once 'Api/Site.php';
             $this->_site = new Jirafe_Api_Site($this);
         }
         return $this->_site;
@@ -149,7 +149,7 @@ class Jirafe_Api
     public function getUser()
     {
         if($this->_user === null) {
-            require_once 'Api/User.php';
+            //require_once 'Api/User.php';
             $this->_user = new Jirafe_Api_User($this);
         }
         return $this->_user;
@@ -314,7 +314,7 @@ class Jirafe_Api
      */
     public function throwException ($msg='')
     {
-        require_once 'Exception.php';
+        //require_once 'Exception.php';
         throw new Jirafe_Exception($msg);
     }
 

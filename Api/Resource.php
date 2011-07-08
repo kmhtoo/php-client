@@ -12,7 +12,7 @@
  * @copyright   Copyright (c) 2010 Fooman Limited (http://www.fooman.co.nz)
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-require_once dirname(dirname(__FILE__)).'/Api.php';
+//require_once dirname(dirname(__FILE__)).'/Api.php';
 
 class Jirafe_Api_Resource
 {
