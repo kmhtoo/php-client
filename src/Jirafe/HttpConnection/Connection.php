@@ -13,7 +13,7 @@
  *
  * @author knplabs.com
  */
-class Jirafe_HttpConnection_Connection implements Jirafe_HttpConnection_Interface
+abstract class Jirafe_HttpConnection_Connection implements Jirafe_HttpConnection_Interface
 {
     /**
      * @see Jirafe_HttpConnection_Interface::get()
