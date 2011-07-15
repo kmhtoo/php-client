@@ -62,7 +62,7 @@ class Jirafe_HttpConnection_Curl extends Jirafe_HttpConnection_Connection
             );
         }
 
-        $curlOptions += array(
+        $curlOpts += array(
             CURLOPT_URL             => $this->base . ltrim($path, '/'),
             CURLOPT_PORT            => $this->port,
             CURLOPT_USERAGENT       => $this->useragent,
