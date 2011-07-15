@@ -44,6 +44,16 @@ class Jirafe_Client
     {
         return $this->token;
     }
+    
+    /**
+     * Set token for subsequent requests.
+     *
+     * @return  string
+     */
+    public function setToken($token)
+    {
+        return $this->token = $token;
+    }
 
     /**
      * Returns applications collection or single application if you provide ID.
