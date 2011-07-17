@@ -30,7 +30,7 @@ class Jirafe_HttpConnection_Curl extends Jirafe_HttpConnection_Connection
      */
     public function __construct($base, $port = 80, $timeout = 10, $useragent = 'jirafe-php-client')
     {
-        $this->base      = rtrim($this->base, '/') . '/';
+        $this->base      = rtrim($base, '/') . '/';
         $this->port      = intval($port);
         $this->timeout   = intval($timeout);
         $this->useragent = $useragent;
@@ -58,7 +58,7 @@ class Jirafe_HttpConnection_Curl extends Jirafe_HttpConnection_Connection
         if (!empty($parameters)) {
             $curlOpts += array(
                 CURLOPT_POSTFIELDS      => $parametersString,
-                CURLOPT_POSTFIELDSIZE   => strlen($parametersString)
+                //CURLOPT_POSTFIELDSIZE   => strlen($parametersString)
             );
         }
 
@@ -127,8 +127,8 @@ class Jirafe_HttpConnection_Curl extends Jirafe_HttpConnection_Connection
             $errorCode    = $headers['http_code'];
             $errorMessage = 'HTTP error';
         }
-
-        $this->initializeResponse($body, $headers, $errorCode, $errorMessage);
+        
+        $response = $this->initializeResponse($body, $headers, $errorCode, $errorMessage);
 
         curl_close($curl);
         return $response;
