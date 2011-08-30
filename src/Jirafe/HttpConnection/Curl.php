@@ -70,13 +70,6 @@ class Jirafe_HttpConnection_Curl extends Jirafe_HttpConnection_Connection
             CURLOPT_TIMEOUT         => $this->timeout,
             CURLOPT_HEADER          => 0
         );
-        
-        if ($this->ssl) {
-            // Add custom certificates
-            $curlOpts += array(
-                CURLOPT_CAINFO      => dirname(__FILE__).'/etc/curl-ca-bundle.crt'
-            );
-        }
 
         $response = null;
 
