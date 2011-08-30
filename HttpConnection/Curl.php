@@ -15,8 +15,8 @@
  */
 class Jirafe_HttpConnection_Curl extends Jirafe_HttpConnection_Connection
 {
+    private $ssl; 
     private $base;
-    private $port;
     private $timeout;
     private $useragent;
 
@@ -24,14 +24,13 @@ class Jirafe_HttpConnection_Curl extends Jirafe_HttpConnection_Connection
      * Initializes CURL connection.
      *
      * @param   string  $base       api url
-     * @param   integer $port       api port
      * @param   integer $timeout    connection timeout
      * @param   string  $useragent  client user-agent
      */
-    public function __construct($base, $port = 80, $timeout = 10, $useragent = 'jirafe-php-client')
+    public function __construct($base, $timeout = 10, $useragent = 'jirafe-php-client')
     {
+        $this->ssl       = strpos($base, 'https://') === 0;
         $this->base      = rtrim($base, '/') . '/';
-        $this->port      = intval($port);
         $this->timeout   = intval($timeout);
         $this->useragent = $useragent;
     }
