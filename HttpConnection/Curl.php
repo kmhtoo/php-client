@@ -48,8 +48,8 @@ class Jirafe_HttpConnection_Curl extends Jirafe_HttpConnection_Connection
     {
         $curlOpts = array();
 
-        $queryString      = utf8_encode(http_build_query($query));
-        $parametersString = utf8_encode(http_build_query($parameters));
+        $queryString      = http_build_query($query);
+        $parametersString = http_build_query($parameters);
 
         if (!empty($query)) {
             $path .= (false === strpos($path, '?') ? '?' : '&') . $queryString;
