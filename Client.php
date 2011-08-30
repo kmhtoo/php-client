@@ -29,7 +29,7 @@ class Jirafe_Client
         $this->token = $token;
 
         if (null === $connection) {
-            $connection = new Jirafe_HttpConnection_Curl('https://api.jirafe.com/v1',443);
+            $connection = new Jirafe_HttpConnection_Curl('https://api.jirafe.com/v1');
         }
 
         $this->connection = $connection;
