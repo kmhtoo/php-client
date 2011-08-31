@@ -2,6 +2,20 @@
 
 PHP 5.2 client for [Jirafe](http://jirafe.com/) web analytics.
 
+## Installation
+
+You can either clone this repository which includes tests with:
+
+    https://github.com/jirafe/php-client
+
+Then, init/update all project submodules (from project root - `cd php-client`):
+
+    git submodule update --init
+
+Or alternatively only clone the src folder with:
+
+    https://github.com/jirafe/php-client-src
+
 ## Usage
 
 ``` php
