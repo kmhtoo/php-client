@@ -44,6 +44,7 @@ class Jirafe_Api_Collection_ResourcesTest extends PHPUnit_Framework_TestCase
             ->expects($this->once())
             ->method('post')
             ->with('applications/41/resources', array(), array(
+                'platform_type' => 'other',
                 'sites' => $sitesToSync,
                 'users' => $usersToSync
             ))
