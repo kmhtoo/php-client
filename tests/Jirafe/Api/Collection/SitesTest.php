@@ -15,7 +15,7 @@ class Jirafe_Api_Collection_SitesTest extends PHPUnit_Framework_TestCase
 
         $this->applications = new Jirafe_Api_Collection_Applications($this->clientMock);
         $this->application  = new Jirafe_Api_Resource_Application(41, $this->applications, $this->clientMock);
-        $this->sites        = new Jirafe_Api_Collection_sites($this->application, $this->clientMock);
+        $this->sites        = new Jirafe_Api_Collection_Sites($this->application, $this->clientMock);
     }
 
     /**
