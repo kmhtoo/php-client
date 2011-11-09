@@ -17,6 +17,14 @@ class Jirafe_ClientTest extends PHPUnit_Framework_TestCase
     /**
      * @test
      */
+    public function shouldProvideConnection()
+    {
+        $this->assertInstanceOf('Jirafe_HttpConnection_Interface', $this->client->getConnection());
+    }
+
+    /**
+     * @test
+     */
     public function shouldProvideSettedToken()
     {
         $this->assertEquals('SECRET_TOKEN', $this->client->getToken());
