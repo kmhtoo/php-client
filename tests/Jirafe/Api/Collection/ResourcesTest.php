@@ -68,6 +68,19 @@ class Jirafe_Api_Collection_ResourcesTest extends PHPUnit_Framework_TestCase
      */
     public function shouldBeAbleToSyncResources()
     {
+        $this->_shouldBeAbleToSyncResources(false);
+    }
+    
+    /**
+     * @test
+     */
+    public function shouldBeAbleToSyncResourcesOptingIn()
+    {
+        $this->_shouldBeAbleToSyncResources(true);
+    }    
+    
+    protected function _shouldBeAbleToSyncResources($optin)
+    {
         $sitesToSync = array(
             array('description' => 'site1', 'url' => 'http://site1'),
             array('description' => 'site1', 'url' => 'http://site2')
@@ -82,11 +95,16 @@ class Jirafe_Api_Collection_ResourcesTest extends PHPUnit_Framework_TestCase
             ->method('post')
             ->with('applications/41/resources', array(), array(
                 'platform_type' => 'other',
+                'opt-in'=> $optin,
                 'sites' => $sitesToSync,
                 'users' => $usersToSync
             ))
             ->will($this->returnValue(new Jirafe_HttpConnection_Response('"hash"', array(), 0, '')));
-
-        $this->assertEquals('hash', $this->resources->sync($sitesToSync, $usersToSync));
-    }
+            
+        if ($optin) {    
+            $this->assertEquals('hash', $this->resources->sync($sitesToSync, $usersToSync, true));
+        } else {          
+            $this->assertEquals('hash', $this->resources->sync($sitesToSync, $usersToSync));
+        }
+    }    
 }
