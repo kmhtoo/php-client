@@ -95,7 +95,7 @@ class Jirafe_Api_Collection_ResourcesTest extends PHPUnit_Framework_TestCase
             ->method('post')
             ->with('applications/41/resources', array(), array(
                 'platform_type' => 'other',
-                'opt-in'=> $optin,
+                'opt_in'=> $optin,
                 'sites' => $sitesToSync,
                 'users' => $usersToSync
             ))
