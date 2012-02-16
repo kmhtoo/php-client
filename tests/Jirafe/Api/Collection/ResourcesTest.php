@@ -65,7 +65,7 @@ class Jirafe_Api_Collection_ResourcesTest extends PHPUnit_Framework_TestCase
             ->will($this->returnValue(new Jirafe_HttpConnection_Response('"hash"', array(), 0, '')));
             
         if ($optin) {    
-            $this->assertEquals('hash', $this->resources->sync($sitesToSync, $usersToSync, true));
+            $this->assertEquals('hash', $this->resources->sync($sitesToSync, $usersToSync, 'other', true));
         } else {          
             $this->assertEquals('hash', $this->resources->sync($sitesToSync, $usersToSync));
         }
