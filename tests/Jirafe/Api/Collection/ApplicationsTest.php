@@ -41,7 +41,13 @@ class Jirafe_Api_Collection_ApplicationsTest extends PHPUnit_Framework_TestCase
         $this->clientMock
             ->expects($this->once())
             ->method('post')
-            ->with('applications', array(), array('name' => 'everzet', 'url' => 'http://everzet.com', 'generic', '1.0.0', '0.1.0'))
+            ->with('applications', array(), array(
+                'name'              => 'everzet',
+                'url'               => 'http://everzet.com',
+                'platform_type'     => 'generic',
+                'platform_version'  => '1.0.0', 
+                'plugin_version'    => '0.1.0'
+            ))
             ->will($this->returnValue(new Jirafe_HttpConnection_Response('"val"', array(), 0, '')));
 
         $this->assertEquals('val', $this->applications->create('everzet', 'http://everzet.com'));
@@ -55,7 +61,13 @@ class Jirafe_Api_Collection_ApplicationsTest extends PHPUnit_Framework_TestCase
         $this->clientMock
             ->expects($this->once())
             ->method('post')
-            ->with('applications', array(), array('name' => 'everzet', 'url' => 'http://everzet.com', 'magento', '1.5.0', '0.5.0'))
+            ->with('applications', array(), array(
+                'name'              => 'everzet',
+                'url'               => 'http://everzet.com',
+                'platform_type'     => 'magento',
+                'platform_version'  => '1.5.0', 
+                'plugin_version'    => '0.5.0'
+            ))
             ->will($this->returnValue(new Jirafe_HttpConnection_Response('"val"', array(), 0, '')));
 
         $this->assertEquals('val', $this->applications->create('everzet', 'http://everzet.com', 'magento', '1.5.0', '0.5.0'));
@@ -70,7 +82,13 @@ class Jirafe_Api_Collection_ApplicationsTest extends PHPUnit_Framework_TestCase
         $this->clientMock
             ->expects($this->once())
             ->method('post')
-            ->with('applications', array(), array('name' => 'everzet', 'url' => 'http://everzet.com', 'generic', '1.0.0', '0.1.0'))
+            ->with('applications', array(), array(
+                'name'              => 'everzet',
+                'url'               => 'http://everzet.com',
+                'platform_type'     => 'generic',
+                'platform_version'  => '1.0.0', 
+                'plugin_version'    => '0.1.0'
+            ))
             ->will($this->returnValue(new Jirafe_HttpConnection_Response('"val"', array(), 2, '')));
 
         $this->assertEquals('val', $this->applications->create('everzet', 'http://everzet.com'));
