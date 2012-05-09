@@ -14,6 +14,23 @@ class Jirafe_ClientTest extends PHPUnit_Framework_TestCase
         $this->client = new Jirafe_Client('SECRET_TOKEN', $this->connectionMock);
     }
 
+    public function testSettingCustomOptionForClient()
+    {
+        $client = new Jirafe_Client('SECRET_TOKEN', $this->connectionMock);
+        $client->setOption('api_version', 'v666');
+
+        $this->assertEquals('https://api.jirafe.com/v666', $client->getApiUrl());
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testSettingInvalidOptionForClient()
+    {
+        $client = new Jirafe_Client('SECRET_TOKEN', $this->connectionMock);
+        $client->setOption('something', 'somewhere');
+    }
+
     /**
      * @test
      */
