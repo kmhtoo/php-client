@@ -106,7 +106,7 @@ class Jirafe_Api_Collection_ResourcesTest extends PHPUnit_Framework_TestCase
     public function shouldBeAbleToSyncResourcesOptingIn()
     {
         $this->_shouldBeAbleToSyncResources(true);
-    }    
+    }
 
     protected function _shouldBeAbleToSyncResources($optin)
     {
@@ -129,11 +129,11 @@ class Jirafe_Api_Collection_ResourcesTest extends PHPUnit_Framework_TestCase
                 'users' => $usersToSync
             ))
             ->will($this->returnValue(new Jirafe_HttpConnection_Response('"hash"', array(), 0, '')));
-            
-        if ($optin) {    
-            $this->assertEquals('hash', $this->resources->sync($sitesToSync, $usersToSync, 'other', true));
-        } else {          
+
+        if ($optin) {
+            $this->assertEquals('hash', $this->resources->sync($sitesToSync, $usersToSync, array('platform_type' => 'other', 'opt_in'=> true)));
+        } else {
             $this->assertEquals('hash', $this->resources->sync($sitesToSync, $usersToSync));
         }
-    }    
+    }
 }

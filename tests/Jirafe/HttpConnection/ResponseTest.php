@@ -2,6 +2,9 @@
 
 class Jirafe_HttpConnection_ResponseTest extends PHPUnit_Framework_TestCase
 {
+    /**
+     * @var Jirafe_HttpConnection_Response
+     */
     private $response;
 
     protected function setUp()

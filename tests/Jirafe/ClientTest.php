@@ -2,7 +2,13 @@
 
 class Jirafe_ClientTest extends PHPUnit_Framework_TestCase
 {
+    /**
+     * @var Jirafe_HttpConnection_Interface
+     */
     private $connectionMock;
+    /**
+     * @var Jirafe_Client
+     */
     private $client;
 
     protected function setUp()
@@ -16,8 +22,9 @@ class Jirafe_ClientTest extends PHPUnit_Framework_TestCase
 
     public function testSettingCustomOptionForClient()
     {
+        Jirafe_Client::setOption('api_version', 'v666');
+
         $client = new Jirafe_Client('SECRET_TOKEN', $this->connectionMock);
-        $client->setOption('api_version', 'v666');
 
         $this->assertEquals('https://api.jirafe.com/v666', $client->getApiUrl());
     }
@@ -27,18 +34,18 @@ class Jirafe_ClientTest extends PHPUnit_Framework_TestCase
      */
     public function testSettingInvalidOptionForClient()
     {
-        $client = new Jirafe_Client('SECRET_TOKEN', $this->connectionMock);
-        $client->setOption('something', 'somewhere');
+        Jirafe_Client::setOption('something', 'somewhere');
     }
 
     public function testSettingCustomOptionsForClient()
     {
-        $client = new Jirafe_Client('SECRET_TOKEN', $this->connectionMock);
-        $client->setOptions(array(
+        Jirafe_Client::setOptions(array(
             'api_server'  => 'http://fake-url.com/',
             'api_base'    => 'dummy.php',
             'api_version' => 'v666'
         ));
+
+        $client = new Jirafe_Client('SECRET_TOKEN', $this->connectionMock);
 
         $this->assertEquals('http://fake-url.com/dummy.php/v666', $client->getApiUrl());
     }
