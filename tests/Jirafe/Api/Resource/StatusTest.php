@@ -1,6 +1,6 @@
 <?php
 
-class Jirafe_Api_Collection_OrdersTest extends PHPUnit_Framework_TestCase
+class Jirafe_Api_Resource_StatusTest extends PHPUnit_Framework_TestCase
 {
     private $clientMock;
     private $applications;
@@ -8,6 +8,7 @@ class Jirafe_Api_Collection_OrdersTest extends PHPUnit_Framework_TestCase
     private $sites;
     private $site;
     private $orders;
+    private $status;
 
     protected function setUp()
     {
@@ -20,6 +21,7 @@ class Jirafe_Api_Collection_OrdersTest extends PHPUnit_Framework_TestCase
         $this->sites        = new Jirafe_Api_Collection_Sites($this->application, $this->clientMock);
         $this->site         = new Jirafe_Api_Resource_Site(234, $this->sites, $this->clientMock);
         $this->orders       = new Jirafe_Api_Collection_Orders($this->site, $this->clientMock);
+        $this->status       = new Jirafe_Api_Resource_Status($this->orders, $this->clientMock);
     }
 
     /**
@@ -27,15 +29,21 @@ class Jirafe_Api_Collection_OrdersTest extends PHPUnit_Framework_TestCase
      */
     public function shouldProvideCorrectPath()
     {
-        $this->assertEquals('applications/45/sites/234/orders', $this->orders->getPath());
+        $this->assertEquals('applications/45/sites/234/orders/status', $this->status->getPath());
     }
 
     /**
      * @test
      */
-    public function shouldProvideStatusResource()
+    public function shouldProvideOrdersStatus()
     {
-        $status = $this->orders->status();
-        $this->assertInstanceOf('Jirafe_Api_Resource_Status',$status);
+        $statusResponse = array('ok'=>1,'errors'=>1,'version'=>0);
+        $this->clientMock
+            ->expects($this->once())
+            ->method('get')
+            ->with('applications/45/sites/234/orders/status')
+            ->will($this->returnValue(new Jirafe_HttpConnection_Response(json_encode($statusResponse), array(), 0, '')));
+
+        $this->assertEquals($statusResponse, $this->status->fetch());
     }
 }
