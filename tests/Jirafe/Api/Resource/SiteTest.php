@@ -115,4 +115,15 @@ class Jirafe_Api_Resource_SiteTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Jirafe_Api_Report_Exits', $exits);
         $this->assertSame($this->site, $exits->getParent());
     }
+
+    /**
+     * @test
+     */
+    public function shouldProvideOrdersReport()
+    {
+        $orders = $this->site->orders();
+
+        $this->assertInstanceOf('Jirafe_Api_Collection_Orders', $orders);
+        $this->assertSame($this->site, $orders->getParent());
+    }
 }
