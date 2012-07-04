@@ -111,7 +111,7 @@ class Jirafe_Event_ValidatorTest extends PHPUnit_Framework_TestCase
         return $testData;
     }
 
-    protected function prepareTestItems($sku, $productName, $category, $price, $quantity, $multiple = false)
+    protected function prepareTestItems($sku, $name, $category, $price, $quantity, $multiple = false)
     {
         $testData = array();
         if (!is_null($sku)) {
@@ -121,11 +121,11 @@ class Jirafe_Event_ValidatorTest extends PHPUnit_Framework_TestCase
                 $testData['sku'] = $sku;
             }
         }
-        if (!is_null($productName)) {
-            if ($productName === true) {
-                $testData['productName'] = 'Iñtërnâtiônàlizætiøn';
+        if (!is_null($name)) {
+            if ($name === true) {
+                $testData['name'] = 'Iñtërnâtiônàlizætiøn';
             } else {
-                $testData['productName'] = $productName;
+                $testData['name'] = $name;
             }
         }
 
@@ -476,7 +476,7 @@ class Jirafe_Event_ValidatorTest extends PHPUnit_Framework_TestCase
     /**
      * @test
      * @expectedException        Jirafe_Exception
-     * @expectedExceptionMessage productName is missing for item
+     * @expectedExceptionMessage name is missing for item
      */
     public function shouldFailWithMissingItemName()
     {
