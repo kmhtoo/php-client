@@ -289,6 +289,17 @@ class Jirafe_Event_ValidatorTest extends PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @expectedException        Jirafe_Exception
+     * @expectedExceptionMessage Missing Data
+     */
+    public function shouldFailWithEmptyData()
+    {
+        $testData = $this->prepareTestData(true, true, '');
+        $this->validator->run($testData, true);
+    }
+
+    /**
+     * @test
      */
     public function shouldPassWithValidData()
     {
@@ -322,11 +333,70 @@ class Jirafe_Event_ValidatorTest extends PHPUnit_Framework_TestCase
     /**
      * @test
      * @expectedException        Jirafe_Exception
+     * @expectedExceptionMessage Error in reading JSON
+     */
+    public function shouldFailWithInvalidOrderId()
+    {
+        $testOrderData = $this->prepareOrderTestData('test',true,true,true,true,true,true,true,true,true,true);
+        $testData = $this->prepareTestData(true, 'orderCreate', $testOrderData);
+        $testData = str_replace('test',iconv('UTF-8', 'ISO-8859-1', 'Iñtërnâtiônàlizætiøn'),$testData);
+        $this->validator->run($testData, true);
+    }
+
+    /**
+     * @test
+     * @covers Jirafe_Event_Validator::validateStrings
+     * @expectedException        Jirafe_Exception
+     * @expectedExceptionMessage orderId is not UTF-8 encoded
+     */
+    public function shouldFailWithInvalidEncoding()
+    {
+        $testOrderData = $this->prepareOrderTestData(true,true,true,true,true,true,true,true,true,true,true);
+        $testOrderData['orderId'] = iconv('UTF-8', 'ISO-8859-1', 'Iñtërnâtiônàlizætiøn');
+
+        $method = new ReflectionMethod(
+            'Jirafe_Event_Validator', 'validateStrings'
+        );
+        $method->setAccessible(TRUE);
+        $method->invokeArgs(new Jirafe_Event_Validator, array($testOrderData));
+    }
+
+    /**
+     * @test
+     * @covers Jirafe_Event_Validator::validateStrings
+     */
+    public function shouldPassWithValidEncoding()
+    {
+        $testOrderData = $this->prepareOrderTestData(true,true,true,true,true,true,true,true,true,true,true);
+        $testOrderData['orderId'] = iconv('UTF-8', 'UTF-8', 'Iñtërnâtiônàlizætiøn');
+
+        $method = new ReflectionMethod(
+            'Jirafe_Event_Validator', 'validateStrings'
+        );
+        $method->setAccessible(TRUE);
+        $method->invokeArgs(new Jirafe_Event_Validator, array($testOrderData));
+    }
+
+    /**
+     * @test
+     * @expectedException        Jirafe_Exception
      * @expectedExceptionMessage Required field status is missing or empty
      */
     public function shouldFailWithMissingStatus()
     {
         $testOrderData = $this->prepareOrderTestData(true,null,true,true,true,true,true,true,true,true,true);
+        $testData = $this->prepareTestData(true, 'orderCreate', $testOrderData);
+        $this->validator->run($testData, true);
+    }
+
+    /**
+     * @test
+     * @expectedException        Jirafe_Exception
+     * @expectedExceptionMessage Status bogus is not one of new,pendingPayment,processing,complete,closed,canceled,held,paymentReview,unknown
+     */
+    public function shouldFailWithInvalidStatus()
+    {
+        $testOrderData = $this->prepareOrderTestData(true,'bogus',true,true,true,true,true,true,true,true,true);
         $testData = $this->prepareTestData(true, 'orderCreate', $testOrderData);
         $this->validator->run($testData, true);
     }
@@ -375,6 +445,30 @@ class Jirafe_Event_ValidatorTest extends PHPUnit_Framework_TestCase
         $testOrderData = $this->prepareOrderTestData(true,true,true,null,true,true,true,true,true,true,true);
         $testData = $this->prepareTestData(true, 'orderCreate', $testOrderData);
         $this->assertTrue($this->validator->run($testData, true));
+    }
+
+    /**
+     * @test
+     * @expectedException        Jirafe_Exception
+     * @expectedExceptionMessage Required field time is missing or empty
+     */
+    public function shouldFailWithMissingTime()
+    {
+        $testOrderData = $this->prepareOrderTestData(true,true,true,true,null,true,true,true,true,true,true);
+        $testData = $this->prepareTestData(true, 'orderCreate', $testOrderData);
+        $this->validator->run($testData, true);
+    }
+
+    /**
+     * @test
+     * @expectedException        Jirafe_Exception
+     * @expectedExceptionMessage Time is not a Unix UTC timestamp
+     */
+    public function shouldFailWithInvalidTime()
+    {
+        $testOrderData = $this->prepareOrderTestData(true,true,true,true,'2008-07-25 01:24:40',true,true,true,true,true,true);
+        $testData = $this->prepareTestData(true, 'orderCreate', $testOrderData);
+        $this->validator->run($testData, true);
     }
 
     /**
@@ -462,6 +556,25 @@ class Jirafe_Event_ValidatorTest extends PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @covers Jirafe_Event_Validator::validateItems
+     * @expectedException        Jirafe_Exception
+     * @expectedExceptionMessage sku is not UTF-8 encoded
+     */
+    public function shouldFailWithInvalidEncodedItem()
+    {
+        $items = $this->prepareTestItems('test',true,true,true,true,true);
+        $testOrderData = $this->prepareOrderTestData(true,true,true,true,true,true,true,true,true,true,$items);
+        $testOrderData['items'][0]['sku'] = iconv('UTF-8', 'ISO-8859-1', 'Iñtërnâtiônàlizætiøn');
+
+        $method = new ReflectionMethod(
+            'Jirafe_Event_Validator', 'validateItems'
+        );
+        $method->setAccessible(TRUE);
+        $method->invokeArgs(new Jirafe_Event_Validator, array($testOrderData));
+    }
+
+    /**
+     * @test
      * @expectedException        Jirafe_Exception
      * @expectedExceptionMessage sku is missing for item
      */
@@ -520,6 +633,18 @@ class Jirafe_Event_ValidatorTest extends PHPUnit_Framework_TestCase
         $items = $this->prepareTestItems(true,true,true,true, null);
         $testOrderData = $this->prepareOrderTestData(true,true,true,true,true,true,true,true,true,true,$items);
         $testData = $this->prepareTestData(true, 'orderCreate', $testOrderData);
+        $this->validator->run($testData, true);
+    }
+
+    /**
+     * @test
+     * @expectedException        Jirafe_Exception
+     * @expectedExceptionMessage Required field orderId is missing or empty
+     */
+    public function shouldFailWithMissingOrderIdOnUpdate()
+    {
+        $testOrderData = $this->prepareOrderTestData(null,true,null,null,null,null,null,null,null,null,null);
+        $testData = $this->prepareTestData(true, 'orderUpdate', $testOrderData);
         $this->validator->run($testData, true);
     }
 
