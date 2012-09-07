@@ -38,4 +38,3 @@ class Jirafe_Callback_EventTest extends PHPUnit_Framework_TestCase
     }
 }
 
-

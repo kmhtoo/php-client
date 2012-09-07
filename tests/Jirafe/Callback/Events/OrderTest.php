@@ -70,5 +70,3 @@ class Jirafe_Callback_Events_OrderTest extends PHPUnit_Framework_TestCase
     }
 }
 
-
-

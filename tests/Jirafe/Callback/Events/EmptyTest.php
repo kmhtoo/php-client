@@ -27,4 +27,3 @@ class Jirafe_Callback_Events_EmptyTest extends PHPUnit_Framework_TestCase
     }
 }
 
-
