@@ -9,13 +9,13 @@ class Jirafe_Callback_Events_RefundTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
       $items = array();
-      $items[] = array(
+      $items[] = new Jirafe_Callback_Events_Item(array(
         'sku' => 1234,
         'name' => 'SomeItem',
         'price' => '12.34',
         'quantity' => 2,
         'category' => 'Widgets'
-      );
+      ));
       $this->event = new Jirafe_Callback_Events_Refund(
         $this->version,
         $this->action,
