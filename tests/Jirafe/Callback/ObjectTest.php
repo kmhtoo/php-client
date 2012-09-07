@@ -14,7 +14,7 @@ class Jirafe_Callback_ObjectTest extends PHPUnit_Framework_TestCase
      */
     public function baseUrl()
     {
-      // $this->assertEquals('https://data.jirafe.com', $this->objectInstance->baseUrl());
+      $this->assertEquals('https://data.jirafe.com', $this->objectInstance->baseUrl());
     }
 }
 
