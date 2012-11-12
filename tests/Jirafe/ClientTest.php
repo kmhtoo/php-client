@@ -1,6 +1,6 @@
 <?php
 
-class Jirafe_ClientTest extends PHPUnit_Framework_TestCase
+class Jirafe_AdminApi_ClientTest extends PHPUnit_Framework_TestCase
 {
     private $connectionMock;
     private $client;
@@ -11,7 +11,7 @@ class Jirafe_ClientTest extends PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->client = new Jirafe_Client('SECRET_TOKEN', $this->connectionMock);
+        $this->client = new Jirafe_AdminApi_Client('SECRET_TOKEN', $this->connectionMock);
     }
 
     /**
@@ -35,7 +35,7 @@ class Jirafe_ClientTest extends PHPUnit_Framework_TestCase
      */
     public function shouldProvideApplicationsCollection()
     {
-        $this->assertInstanceOf('Jirafe_Api_Collection_Applications', $this->client->applications());
+        $this->assertInstanceOf('Jirafe_AdminApi_Collection_Applications', $this->client->applications());
     }
 
     /**
@@ -43,7 +43,7 @@ class Jirafe_ClientTest extends PHPUnit_Framework_TestCase
      */
     public function shouldProvideSpecificApplicationResource()
     {
-        $this->assertInstanceOf('Jirafe_Api_Resource_Application', $this->client->applications(1));
+        $this->assertInstanceOf('Jirafe_AdminApi_Resource_Application', $this->client->applications(1));
     }
 
     /**
@@ -51,7 +51,7 @@ class Jirafe_ClientTest extends PHPUnit_Framework_TestCase
      */
     public function shouldProvideUsersCollection()
     {
-        $this->assertInstanceOf('Jirafe_Api_Collection_Users', $this->client->users());
+        $this->assertInstanceOf('Jirafe_AdminApi_Collection_Users', $this->client->users());
     }
 
     /**
@@ -59,7 +59,7 @@ class Jirafe_ClientTest extends PHPUnit_Framework_TestCase
      */
     public function shouldProvideSpecificUserResource()
     {
-        $this->assertInstanceOf('Jirafe_Api_Resource_User', $this->client->users(1));
+        $this->assertInstanceOf('Jirafe_AdminApi_Resource_User', $this->client->users(1));
     }
 
     /**

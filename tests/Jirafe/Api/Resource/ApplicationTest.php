@@ -1,6 +1,6 @@
 <?php
 
-class Jirafe_Api_Resource_ApplicationTest extends PHPUnit_Framework_TestCase
+class Jirafe_AdminApi_Resource_ApplicationTest extends PHPUnit_Framework_TestCase
 {
     private $clientMock;
     private $applications;
@@ -8,12 +8,12 @@ class Jirafe_Api_Resource_ApplicationTest extends PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->clientMock = $this->getMockBuilder('Jirafe_Client')
+        $this->clientMock = $this->getMockBuilder('Jirafe_AdminApi_Client')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->applications = new Jirafe_Api_Collection_Applications($this->clientMock);
-        $this->application  = new Jirafe_Api_Resource_Application(23, $this->applications, $this->clientMock);
+        $this->applications = new Jirafe_AdminApi_Collection_Applications($this->clientMock);
+        $this->application  = new Jirafe_AdminApi_Resource_Application(23, $this->applications, $this->clientMock);
     }
 
     /**
@@ -23,7 +23,7 @@ class Jirafe_Api_Resource_ApplicationTest extends PHPUnit_Framework_TestCase
     {
         $sites = $this->application->sites();
 
-        $this->assertInstanceOf('Jirafe_Api_Collection_Sites', $sites);
+        $this->assertInstanceOf('Jirafe_AdminApi_Collection_Sites', $sites);
     }
 
     /**
@@ -33,7 +33,7 @@ class Jirafe_Api_Resource_ApplicationTest extends PHPUnit_Framework_TestCase
     {
         $resources = $this->application->resources();
 
-        $this->assertInstanceOf('Jirafe_Api_Collection_Resources', $resources);
+        $this->assertInstanceOf('Jirafe_AdminApi_Collection_Resources', $resources);
     }
 
     /**
@@ -43,7 +43,7 @@ class Jirafe_Api_Resource_ApplicationTest extends PHPUnit_Framework_TestCase
     {
         $site = $this->application->sites(2);
 
-        $this->assertInstanceOf('Jirafe_Api_Resource_Site', $site);
+        $this->assertInstanceOf('Jirafe_AdminApi_Resource_Site', $site);
         $this->assertEquals(2, $site->getId());
     }
 

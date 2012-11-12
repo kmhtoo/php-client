@@ -1,6 +1,6 @@
 <?php
 
-class Jirafe_Api_ResourceTest extends PHPUnit_Framework_TestCase
+class Jirafe_AdminApi_ResourceTest extends PHPUnit_Framework_TestCase
 {
     private $clientMock;
     private $collectionMock;
@@ -8,16 +8,16 @@ class Jirafe_Api_ResourceTest extends PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->clientMock = $this->getMockBuilder('Jirafe_Client')
+        $this->clientMock = $this->getMockBuilder('Jirafe_AdminApi_Client')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->collectionMock = $this->getMockBuilder('Jirafe_Api_Collection')
+        $this->collectionMock = $this->getMockBuilder('Jirafe_AdminApi_Collection')
             ->setMethods(array('getCollectionName'))
             ->setConstructorArgs(array(null, $this->clientMock))
             ->getMock();
 
-        $this->resourceMock = $this->getMockBuilder('Jirafe_Api_Resource')
+        $this->resourceMock = $this->getMockBuilder('Jirafe_AdminApi_Resource')
             ->setMethods(array('getClassName'))
             ->setConstructorArgs(array('beretta', $this->collectionMock, $this->clientMock))
             ->getMock();

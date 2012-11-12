@@ -1,17 +1,17 @@
 <?php
 
-class Jirafe_Api_CollectionTest extends PHPUnit_Framework_TestCase
+class Jirafe_AdminApi_CollectionTest extends PHPUnit_Framework_TestCase
 {
     private $clientMock;
     private $collectionMock;
 
     protected function setUp()
     {
-        $this->clientMock = $this->getMockBuilder('Jirafe_Client')
+        $this->clientMock = $this->getMockBuilder('Jirafe_AdminApi_Client')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->collectionMock = $this->getMockBuilder('Jirafe_Api_Collection')
+        $this->collectionMock = $this->getMockBuilder('Jirafe_AdminApi_Collection')
             ->setMethods(array('getCollectionName'))
             ->setConstructorArgs(array(null, $this->clientMock))
             ->getMock();
@@ -22,11 +22,11 @@ class Jirafe_Api_CollectionTest extends PHPUnit_Framework_TestCase
      */
     public function shouldProvideParentIfHasOne()
     {
-        $resourceMock = $this->getMockBuilder('Jirafe_Api_Resource')
+        $resourceMock = $this->getMockBuilder('Jirafe_AdminApi_Resource')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $collectionMock = $this->getMockBuilder('Jirafe_Api_Collection')
+        $collectionMock = $this->getMockBuilder('Jirafe_AdminApi_Collection')
             ->setMethods(array('getCollectionName'))
             ->setConstructorArgs(array($resourceMock, $this->clientMock))
             ->getMock();
@@ -68,11 +68,11 @@ class Jirafe_Api_CollectionTest extends PHPUnit_Framework_TestCase
      */
     public function shouldProvideFullPathIfHasParent()
     {
-        $resourceMock = $this->getMockBuilder('Jirafe_Api_Resource')
+        $resourceMock = $this->getMockBuilder('Jirafe_AdminApi_Resource')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $collectionMock = $this->getMockBuilder('Jirafe_Api_Collection')
+        $collectionMock = $this->getMockBuilder('Jirafe_AdminApi_Collection')
             ->setMethods(array('getCollectionName'))
             ->setConstructorArgs(array($resourceMock, $this->clientMock))
             ->getMock();

@@ -1,17 +1,17 @@
 <?php
 
-class Jirafe_Api_Collection_UsersTest extends PHPUnit_Framework_TestCase
+class Jirafe_AdminApi_Collection_UsersTest extends PHPUnit_Framework_TestCase
 {
     private $clientMock;
     private $users;
 
     protected function setUp()
     {
-        $this->clientMock = $this->getMockBuilder('Jirafe_Client')
+        $this->clientMock = $this->getMockBuilder('Jirafe_AdminApi_Client')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->users = new Jirafe_Api_Collection_Users($this->clientMock);
+        $this->users = new Jirafe_AdminApi_Collection_Users($this->clientMock);
     }
 
     /**
@@ -21,7 +21,7 @@ class Jirafe_Api_Collection_UsersTest extends PHPUnit_Framework_TestCase
     {
         $user = $this->users->get(12);
 
-        $this->assertInstanceOf('Jirafe_Api_Resource_User', $user);
+        $this->assertInstanceOf('Jirafe_AdminApi_Resource_User', $user);
         $this->assertEquals(12, $user->getId());
     }
 
