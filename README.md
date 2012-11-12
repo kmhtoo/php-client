@@ -1,6 +1,6 @@
 # Jirafe API Client
 
-PHP 5.2 client for [Jirafe](http://jirafe.com/) web analytics.
+PHP 5.2 client for [Jirafe](http://jirafe.com/) e-commerce analytics.
 
 ## Installation
 
@@ -13,11 +13,7 @@ You can clone this repository which includes tests with:
 ```php
 require_once 'path/to/client/autoload.php';
 
-// init API client
 $client = new Jirafe_Client(YOUR_API_TOKEN);
-
-// get visits report from site #12 in application #23
-$reportHash = $client->applications(23)->sites(12)->visits()->fetch();
 
 // get 'Jack' user information
 $userHash = $client->users('Jack')->fetchValues();
@@ -414,3 +410,21 @@ Licensed under the Apache License, Version 2.0 (the "License"); you may not use 
 http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+
+## Tests
+
+Includes AdminApi, TrackerApi client tests
+
+### Requirements
+
+- **PHPUnit** 3.5.4 or higher
+- **PHPUnit_MockObject** 1.0.9 or higher
+
+### To run tests execute
+
+    phpunit
+
+Optionaly you can change phpunit configuration by:
+
+    cp phpunit.xml.dist phpunit.xml
+
