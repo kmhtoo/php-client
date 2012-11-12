@@ -53,7 +53,7 @@ class Jirafe_TrackerApi_Client
      *     )
      * );
      */
-    public function updateCart($cart)
+    public function updateCart(array $cart)
     {
         $tracker = $this->getTracker($cart['siteId']);
 
@@ -108,7 +108,7 @@ class Jirafe_TrackerApi_Client
      *     )
      * );
      */
-    public function createOrder($order)
+    public function createOrder(array $order)
     {
         $tracker = $this->getTracker($order['siteId']);
 
