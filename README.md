@@ -263,66 +263,6 @@ Array
 $siteRes->delete();
 ```
 
-## Site reports
-
-To get access to site reports, you'll need a client, initialized with token,
-that gives you access to this specific site.
-
-First, you'll need to get site resource:
-
-``` php
-$client  = new Jirafe_Client(API_TOKEN);
-$siteRes = $client->applications(23)->sites(324);
-// or $siteRes = $client->applications()->get(23)->sites()->get(324);
-```
-
-Then, you must choose from one of 8 report types:
-
-``` php
-$specificSiteReports = $siteRes->visits();
-$specificSiteReports = $siteRes->visitors();
-$specificSiteReports = $siteRes->bounces();
-$specificSiteReports = $siteRes->average();
-$specificSiteReports = $siteRes->revenues();
-$specificSiteReports = $siteRes->keywords();
-$specificSiteReports = $siteRes->referers();
-$specificSiteReports = $siteRes->exits();
-```
-
-And then, you can get specific report with `fetch(...)` or `fetch...(...)` methods.
-For example, to get visits per hour on specific day, you should call:
-
-``` php
-$repHash = $siteRes->visits()->fetch('yesterday', array('hour'));
-```
-
-First argument is a date, second is array of breakdown parameters (`hour`, `day`).
-
-`$repHash` in that case will hold something like:
-
-```php
-Array
-(
-    [0] => Array
-        (
-            [hour] => 0
-            [visits] => 40
-        )
-
-    [1] => Array
-        (
-            [hour] => 1
-            [visits] => 32
-        )
-
-    [2] => Array
-        (
-            [hour] => 2
-            [visits] => 0
-        )
-)
-```
-
 ## Sync API
 
 To be able to run sync process, you'll need and application admin token and
